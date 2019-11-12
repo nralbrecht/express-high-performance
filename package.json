@@ -1,0 +1,22 @@
+{
+  "name": "super-high-performance-express",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon --exec babel-node index.js"
+  },
+  "type": "module",
+  "author": "Nils Albrecht",
+  "license": "",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.7.7"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.6.4",
+    "@babel/node": "^7.6.3",
+    "@babel/preset-env": "^7.6.3",
+    "nodemon": "^1.19.4"
+  }
+}
