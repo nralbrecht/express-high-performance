@@ -11,7 +11,8 @@
   "license": "",
   "dependencies": {
     "express": "^4.17.1",
-    "mongoose": "^5.7.7"
+    "mongoose": "^5.7.7",
+    "body-parser": "latest"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
