@@ -1,91 +1,115 @@
 import mongoose from "mongoose";
-import * as res from "express";
+
 
 const evaluationRecordSchema = new mongoose.Schema({
-    sid: Number,
-    year: Number,
+    sid: {
+        type: Number,
+        required: true,
+    },
+    year: {
+        type: Number,
+        required: true
+    },
     criteria: [{
-        goalId: Number,
-        targetValue: Number,
-        actualValue: Number
+        goalId: {
+            type: Number,
+            required: true
+        },
+        targetValue: {
+            type: Number,
+            required: true
+        },
+        actualValue: {
+            type: Number,
+            required: true
+        }
     }]
 });
 
+// does not work
+evaluationRecordSchema.index({ 'sid': 1, 'year': 1 }, { 'unique': true });
+
 const EvaluationRecord = mongoose.model('EvaluationRecord', evaluationRecordSchema);
 
-function readAll(res) {
-    EvaluationRecord.find((err, records) => {
-        if (err) return res.status(500).send(err);
-        return res.status(200).send(records);
+function init() {
+    EvaluationRecord.init().then(() => {
+
+        EvaluationRecord.collection.deleteMany({});
+
+        create(new EvaluationRecord({
+            "sid":91782,
+            "year":2019,
+            "criteria":[
+                {"goalId":1,"targetValue":4,"actualValue":3},
+                {"goalId":2,"targetValue":4,"actualValue":4},
+                {"goalId":3,"targetValue":4,"actualValue":2},
+                {"goalId":4,"targetValue":4,"actualValue":3},
+                {"goalId":5,"targetValue":4,"actualValue":4},
+                {"goalId":6,"targetValue":4,"actualValue":4}
+            ]
+        }));
+        create(new EvaluationRecord({
+            "sid":91782,
+            "year":2018,
+            "criteria":[
+                {"goalId":1,"targetValue":4,"actualValue":4},
+                {"goalId":2,"targetValue":4,"actualValue":4},
+                {"goalId":3,"targetValue":4,"actualValue":2},
+                {"goalId":4,"targetValue":4,"actualValue":3},
+                {"goalId":5,"targetValue":4,"actualValue":2},
+                {"goalId":6,"targetValue":4,"actualValue":3}
+            ]
+        }));
+        create(new EvaluationRecord({
+            "sid":84234,
+            "year":2019,
+            "criteria":[
+                {"goalId":1,"targetValue":4,"actualValue":3},
+                {"goalId":2,"targetValue":4,"actualValue":4},
+                {"goalId":3,"targetValue":4,"actualValue":2},
+                {"goalId":4,"targetValue":4,"actualValue":3},
+                {"goalId":5,"targetValue":4,"actualValue":4},
+                {"goalId":6,"targetValue":4,"actualValue":4}
+            ]
+        }));
     });
+
 }
 
-function readBySid(res, sid) {
-    EvaluationRecord.find({sid: sid}, (err, records) => {
-        if (err) return res.status(500).send(err);
-        return res.status(200).send(records);
-    });
+function readAll() {
+    return EvaluationRecord.find();
 }
 
-function readBySidAndYear(res, sid, year) {
-    EvaluationRecord.find({sid: sid, year: year}, (err, records) => {
-        if (err) return res.status(500).send(err);
-        return res.status(200).send(records);
-    });
+function readBySid(sid) {
+    return EvaluationRecord.find({sid: sid});
 }
 
-function create(req, res) {
-    const evaluationRecord = new EvaluationRecord(req.body);
-    evaluationRecord.save(err => {
-        if (err) return res.status(500).send(err);
-        return res.status(200).send(evaluationRecord);
-    });
+function readBySidAndYear(sid, year) {
+    return EvaluationRecord.find({sid: sid, year: year});
+}
+
+function create(evaluationRecord) {
+    return EvaluationRecord.create(evaluationRecord);
+}
+
+function update(evaluationRecord) {
+    return EvaluationRecord.updateOne({sid: evaluationRecord.sid, year: evaluationRecord.year}, evaluationRecord);
+}
+
+function deleteAllBySid(sid) {
+    return EvaluationRecord.deleteMany({sid: sid});
 }
 
 
-
-
-/**********************************************************************************************
- * Dojo functions
- **********************************************************************************************
- async function create(evaluationRecord) {
-    // check if evaluation record for sid and year exists
-    const check = await read(evaluationRecord.sid, evaluationRecord.year);
-    if (check.length !== 0) return console.error("Evaluation record for sid and year already exists.");
-
-    // save to db
-    evaluationRecord.save(function (err, evalRec) {
-        if (err) return console.error(err);
-        console.log(JSON.stringify(evalRec));
-    });
- }
-
- function read(sid, year) {
-    return EvaluationRecord.find({sid: sid, year: year}, (err, records) =>{
-        if (err) return console.error(err);
-        return records;
-    });
- }
-
- async function update(evaluationRecord) {
-    // check if evaluation record for sid and year exists
-    const check = await read(evaluationRecord.sid, evaluationRecord.year);
-    if (check.length === 0) return console.error("Evaluation record for sid and year does not exists.");
-
-    // update at db
-    evaluationRecord.save(function (err, evaluationRecord) {
-        if (err) return console.error(err);
-        console.log(JSON.stringify(evaluationRecord));
-    });
- }
- */
-
+export default init();
 
 export {
     EvaluationRecord,
     readAll,
     readBySid,
     readBySidAndYear,
-    create
+    create,
+    update,
+    deleteAllBySid,
 };
 

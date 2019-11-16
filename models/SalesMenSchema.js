@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import {createSalesMan} from "../factories/SalesManFactory";
 
 const salesMenSchema = new mongoose.Schema({
     sid: {
@@ -13,9 +14,54 @@ const salesMenSchema = new mongoose.Schema({
     lastName: {
         type: String,
         required: true
+    },
+    department: {
+        type: String,
+        required: true
     }
 });
 
 const SalesMen = mongoose.model('SalesMen', salesMenSchema);
 
-export default SalesMen;
+function init() {
+    SalesMen.init().then(() => {
+
+        SalesMen.collection.deleteMany({});
+
+        create(createSalesMan(91782, "William", "Riden", "Sales"));
+        create(createSalesMan(84234, "Mary-Ann", "Sallinger", "Sales"));
+        create(createSalesMan(90123, "John", "Smith", "Sales"));
+    });
+}
+
+function readAll() {
+    return SalesMen.find();
+}
+
+function readBySid(sid) {
+    return SalesMen.find({sid: sid});
+}
+
+function create(salesMan) {
+    return SalesMen.create(salesMan);
+}
+
+function update(salesMan) {
+    return SalesMen.updateOne({sid: salesMan.sid}, salesMan);
+}
+
+function deleteBySid(sid) {
+    return SalesMen.deleteOne({sid: sid});
+}
+
+
+export default init();
+
+export {
+    SalesMen,
+    readAll,
+    readBySid,
+    create,
+    update,
+    deleteBySid,
+};
