@@ -21,7 +21,7 @@ const salesMenSchema = new mongoose.Schema({
     }
 });
 
-const SalesMen = mongoose.model('SalesMen', salesMenSchema);
+const SalesMen = mongoose.model('SalesMan', salesMenSchema);
 
 function init() {
     SalesMen.init().then(() => {
