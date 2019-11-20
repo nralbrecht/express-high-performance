@@ -10,9 +10,10 @@
   "author": "Nils Albrecht",
   "license": "",
   "dependencies": {
+    "body-parser": "latest",
     "express": "^4.17.1",
     "mongoose": "^5.7.7",
-    "body-parser": "latest"
+    "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {
     "@babel/core": "^7.6.4",
