@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 
 
-const evaluationRecordSchema = new mongoose.Schema({
+const socialEvaluationSchema = new mongoose.Schema({
     sid: {
         type: Number,
         required: true,
@@ -27,19 +27,19 @@ const evaluationRecordSchema = new mongoose.Schema({
 });
 
 // does not work
-evaluationRecordSchema.index({ 'sid': 1, 'year': 1 }, { 'unique': true });
+socialEvaluationSchema.index({ 'sid': 1, 'year': 1 }, { 'unique': true });
 
-const EvaluationRecord = mongoose.model('EvaluationRecord', evaluationRecordSchema);
+const SocialEvaluation = mongoose.model('SocialEvaluation', socialEvaluationSchema);
 
 function init() {
-    EvaluationRecord.init().then(() => {
+    SocialEvaluation.init().then(() => {
 
-        EvaluationRecord.collection.deleteMany({});
+        SocialEvaluation.collection.deleteMany({});
 
-        create(new EvaluationRecord({
-            "sid":91782,
-            "year":2019,
-            "criteria":[
+        create(
+            91782,
+            2019,
+            [
                 {"goalId":1,"targetValue":4,"actualValue":3},
                 {"goalId":2,"targetValue":4,"actualValue":4},
                 {"goalId":3,"targetValue":4,"actualValue":2},
@@ -47,11 +47,11 @@ function init() {
                 {"goalId":5,"targetValue":4,"actualValue":4},
                 {"goalId":6,"targetValue":4,"actualValue":4}
             ]
-        }));
-        create(new EvaluationRecord({
-            "sid":91782,
-            "year":2018,
-            "criteria":[
+        );
+        create(
+            91782,
+            2018,
+            [
                 {"goalId":1,"targetValue":4,"actualValue":4},
                 {"goalId":2,"targetValue":4,"actualValue":4},
                 {"goalId":3,"targetValue":4,"actualValue":2},
@@ -59,11 +59,11 @@ function init() {
                 {"goalId":5,"targetValue":4,"actualValue":2},
                 {"goalId":6,"targetValue":4,"actualValue":3}
             ]
-        }));
-        create(new EvaluationRecord({
-            "sid":84234,
-            "year":2019,
-            "criteria":[
+        );
+        create(
+            84234,
+            2019,
+            [
                 {"goalId":1,"targetValue":4,"actualValue":3},
                 {"goalId":2,"targetValue":4,"actualValue":4},
                 {"goalId":3,"targetValue":4,"actualValue":2},
@@ -71,40 +71,48 @@ function init() {
                 {"goalId":5,"targetValue":4,"actualValue":4},
                 {"goalId":6,"targetValue":4,"actualValue":4}
             ]
-        }));
+        );
     });
 
 }
 
 function readAll() {
-    return EvaluationRecord.find();
+    return SocialEvaluation.find();
 }
 
 function readBySid(sid) {
-    return EvaluationRecord.find({sid: sid});
+    return SocialEvaluation.find({sid: sid});
 }
 
 function readBySidAndYear(sid, year) {
-    return EvaluationRecord.find({sid: sid, year: year});
+    return SocialEvaluation.find({sid: sid, year: year});
 }
 
-function create(evaluationRecord) {
-    return EvaluationRecord.create(evaluationRecord);
+function create(sid, year, criteria) {
+    return SocialEvaluation.create(new SocialEvaluation({
+        "sid": sid,
+        "year": year,
+        "criteria": criteria
+    }));
 }
 
-function update(evaluationRecord) {
-    return EvaluationRecord.updateOne({sid: evaluationRecord.sid, year: evaluationRecord.year}, evaluationRecord);
+function update(sid, year, criteria) {
+    return SocialEvaluation.updateOne({sid: sid, year: year}, {
+        "sid": sid,
+        "year": year,
+        "criteria": criteria
+    });
 }
 
 function deleteAllBySid(sid) {
-    return EvaluationRecord.deleteMany({sid: sid});
+    return SocialEvaluation.deleteMany({sid: sid});
 }
 
 
 export default init();
 
 export {
-    EvaluationRecord,
+    SocialEvaluation,
     readAll,
     readBySid,
     readBySidAndYear,

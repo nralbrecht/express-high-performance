@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { readAll, readBySid, readBySidAndYear, create, update, deleteAllBySid } from '../models/EvaluationRecordSchema';
+import { readAll, readBySid, readBySidAndYear, create, update, deleteAllBySid } from '../models/SocialEvaluationSchema';
 
 const router = Router();
 
@@ -11,6 +11,7 @@ router.get('/', (req, res) => {
         .catch(function(err) {
             console.log(err);
             return res.status(409).send("Error!");
+
         });
 });
 
