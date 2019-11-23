@@ -8,11 +8,14 @@
   },
   "type": "module",
   "author": "Nils Albrecht",
-  "license": "",
+  "license": "UNLICENSED",
+  "private": true,
   "dependencies": {
     "body-parser": "latest",
     "express": "^4.17.1",
+    "js-base64": "^2.5.1",
     "mongoose": "^5.7.7",
+    "node-fetch": "^2.6.0",
     "xmlhttprequest": "^1.8.0"
   },
   "devDependencies": {

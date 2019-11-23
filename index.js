@@ -14,6 +14,7 @@ app.use(
     })
 )
 app.use(bodyParser.json());
+
 app.use('/salesmen', routes.order)
 app.use('/salesmen', routes.report)
 app.use('/salesmen', routes.salesmen)
