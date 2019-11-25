@@ -20,8 +20,8 @@
       "description": "Access to reports"
     },
     {
-      "name": "performance",
-      "description": "Access to performance reports"
+      "name": "social",
+      "description": "Access to social performance records"
     },
     {
       "name": "orders",
@@ -278,10 +278,10 @@
         "x-codegen-request-body-name": "body"
       }
     },
-    "/salesmen/{sid}/report/{year}/performance": {
+    "/salesmen/{sid}/report/{year}/social": {
       "get": {
         "tags": [
-          "performance"
+          "social"
         ],
         "summary": "Get the social performance evaluation for the given year and salesman",
         "parameters": [
@@ -324,7 +324,7 @@
       },
       "put": {
         "tags": [
-          "performance"
+          "social"
         ],
         "summary": "Update the social performance evaluation for the given year and salesman",
         "parameters": [
@@ -377,7 +377,7 @@
       },
       "post": {
         "tags": [
-          "performance"
+          "social"
         ],
         "summary": "Create the social performance evaluation for the given year and salesman",
         "parameters": [
