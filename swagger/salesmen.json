@@ -594,7 +594,10 @@
             "format": "int32"
           },
           "criteria": {
-            "$ref": "#/components/schemas/SocialCriterion"
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SocialCriterion"
+            }
           }
         }
       },
