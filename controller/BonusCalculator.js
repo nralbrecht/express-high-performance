@@ -15,18 +15,32 @@ function calculateOrdersTotal(orders) {
             totalOrderBonus += 700;
         }
         else {
-            throw new Error("unexprected accountRating (" + order.customer.accountRating + ")");
+            throw new Error("unexpected accountRating (" + order.customer.accountRating + ")");
         }
     }
     return totalOrderBonus;
 }
 
-// TODO: implement
-function calculateSocialTotal() {
-
+function calculateSocialTotal(socialCriteria) {
+    let totalSocialBonus = 0;
+    for (const social of socialCriteria) {
+        if ((social.actualValue / social.targetValue) >= 1.25) {
+            totalSocialBonus += 100;
+        }
+        else if ((social.actualValue / social.targetValue) >= 1.0) {
+            totalSocialBonus += 50;
+        }
+        else if ((social.actualValue / social.targetValue) >= 0.75) {
+            totalSocialBonus += 20;
+        }
+        else if ((social.actualValue / social.targetValue) >= 0.50) {
+            totalSocialBonus += 10;
+        }
+    }
+    return totalSocialBonus;
 }
 
-export default {
+export {
     calculateTotal,
     calculateOrdersTotal,
     calculateSocialTotal

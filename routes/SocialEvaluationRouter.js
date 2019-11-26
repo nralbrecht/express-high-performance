@@ -1,20 +1,24 @@
 import { Router } from 'express';
 import * as socialEvaluation from "../models/SocialEvaluationSchema";
+import { calculateSocialTotal } from "../controller/BonusCalculator";
 
 const router = Router();
 
-// TODO: Send bonus (Jenny)
 router.get('/:sid/report/:year/social', async (req, res) => {
     try {
         const records = await socialEvaluation.readBySidAndYear(req.params.sid, req.params.year);
         if (records.length === 0) {
-            return res.status(409).send("Could not be found! Social evaluation record does not exist.");
+            return res.status(400).send("Could not be found! Social evaluation record does not exist.");
         }
-        return res.status(200).send(records);
+        const social = {
+            "social": records.criteria,
+            "totalBonus": calculateSocialTotal(records.criteria)
+        };
+        return res.status(200).send(social);
     }
     catch (err) {
         console.log(err);
-        return res.status(409).send("Error!");
+        return res.status(400).send("Error!");
     }
 });
 
@@ -27,11 +31,11 @@ router.post('/:sid/report/:year/social', async (req, res) => {
     catch (err) {
         // duplicate key error
         if (err.code === 11000) {
-            return res.status(409).send("Evaluation record was not created! Social evaluation record for sid and year already exists.");
+            return res.status(400).send("Evaluation record was not created! Social evaluation record for sid and year already exists.");
         }
         // different error
         console.log(err);
-        return res.status(409).send("Error!");
+        return res.status(400).send("Error!");
     }
 });
 
@@ -43,7 +47,7 @@ router.put('/:sid/report/:year/social', async (req, res) => {
     }
     catch (err) {
         console.log(err);
-        return res.status(409).send("Error!");
+        return res.status(400).send("Error!");
     }
 });
 

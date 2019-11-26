@@ -37,7 +37,7 @@ function init() {
         SocialEvaluation.collection.deleteMany({});
 
         create(
-            91782,
+            90123,
             2019,
             [
                 {"goalId":1,"targetValue":4,"actualValue":3},
@@ -49,7 +49,7 @@ function init() {
             ]
         );
         create(
-            91782,
+            90123,
             2018,
             [
                 {"goalId":1,"targetValue":4,"actualValue":4},
@@ -58,18 +58,6 @@ function init() {
                 {"goalId":4,"targetValue":4,"actualValue":3},
                 {"goalId":5,"targetValue":4,"actualValue":2},
                 {"goalId":6,"targetValue":4,"actualValue":3}
-            ]
-        );
-        create(
-            84234,
-            2019,
-            [
-                {"goalId":1,"targetValue":4,"actualValue":3},
-                {"goalId":2,"targetValue":4,"actualValue":4},
-                {"goalId":3,"targetValue":4,"actualValue":2},
-                {"goalId":4,"targetValue":4,"actualValue":3},
-                {"goalId":5,"targetValue":4,"actualValue":4},
-                {"goalId":6,"targetValue":4,"actualValue":4}
             ]
         );
     });
@@ -85,7 +73,7 @@ function readBySid(sid) {
 }
 
 function readBySidAndYear(sid, year) {
-    return SocialEvaluation.find({sid: sid, year: year});
+    return SocialEvaluation.findOne({sid: sid, year: year});
 }
 
 function create(sid, year, criteria) {
@@ -118,6 +106,6 @@ export {
     readBySidAndYear,
     create,
     update,
-    deleteAllBySid,
+    deleteAllBySid
 };
 
