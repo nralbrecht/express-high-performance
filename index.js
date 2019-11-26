@@ -1,11 +1,11 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import routes from './routes';
-import start from './models/MongoStarter';
+import start from './db/MongoStarter';
 import { getAbsoluteFSPath } from 'swagger-ui-dist';
 import replace from 'replace';
 import path from 'path';
-import { updateBonusGehalt } from "./adapter/OrangeHRMAdapter";
+import { updateBonusGehalt } from "./adapters/OrangeHRMAdapter";
 
 start();
 updateBonusGehalt(90123, 301);

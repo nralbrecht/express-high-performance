@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import { readAll, readBySid } from "../models/SalesMenSchema";
+import { getAllSalesmen, getSalesmenById } from "../adapters/OrangeHRMAdapter";
 
 const router = Router();
 
 // TODO: Call methods from OrangeHRMAdapater (Jenny)
 router.get('/', async (req, res) => {
     try {
-        const records = await readAll();
+        const records = await getAllSalesmen();
         return res.status(200).send(records);
     }
     catch (err) {
@@ -18,7 +18,7 @@ router.get('/', async (req, res) => {
 // TODO: Call methods from OrangeHRMAdapater (Jenny)
 router.get('/:sid', async (req, res) => {
     try {
-        const records = await readBySid(req.params.sid);
+        const records = await getSalesmenById(req.params.sid);
         if (records.length === 0) {
             return res.status(409).send("Could not be found! Sales man does not exist.");
         }

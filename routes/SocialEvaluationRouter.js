@@ -3,7 +3,7 @@ import * as socialEvaluation from "../models/SocialEvaluationSchema";
 
 const router = Router();
 
-// works
+// TODO: Send bonus (Jenny)
 router.get('/:sid/report/:year/social', async (req, res) => {
     try {
         const records = await socialEvaluation.readBySidAndYear(req.params.sid, req.params.year);
