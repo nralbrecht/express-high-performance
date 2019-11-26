@@ -34,7 +34,7 @@ app.use('/salesmen', routes.salesmen);
 app.use('/salesmen', routes.socialEvaluation);
 
 app.use('/swagger-ui', express.static(swaggerUiAssetPath))
-app.use('/swagger-ui', express.static('swagger'))
+app.use('/swagger-ui', express.static('src/server/swagger'))
 
 app.listen(PORT, () =>
     console.log(`Example app listening on port ${PORT}!`),

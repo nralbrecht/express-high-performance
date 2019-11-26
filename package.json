@@ -2,9 +2,9 @@
   "name": "super-high-performance-express",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/server/index.js",
   "scripts": {
-    "start": "nodemon --exec babel-node index.js",
+    "start": "nodemon --exec babel-node src/server/index.js",
     "test": "mocha --require @babel/register 'test/*'"
   },
   "type": "module",
