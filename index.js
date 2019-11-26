@@ -5,8 +5,10 @@ import start from './models/MongoStarter';
 import { getAbsoluteFSPath } from 'swagger-ui-dist';
 import replace from 'replace';
 import path from 'path';
+import { updateBonusGehalt } from "./models/OrangeHRMAdapter";
 
 start();
+updateBonusGehalt(90123, 301);
 
 const app = express();
 const PORT = 8080;

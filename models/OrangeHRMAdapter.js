@@ -114,10 +114,33 @@ function getSalesmenById(sid) {
 }
 
 function updateBonusGehalt(sid, newBonusGehalt) {
-    // PUT https://sepp-hrm.inf.h-brs.de/symfony/web/index.php/api/v1/employee/10/custom-field
-    // Request Body:
-    // fieldId:8
-    // value:300
+    const bonusData = {
+        "fieldId": 9,
+        "value": newBonusGehalt
+    };
+
+    return createToken().then(token => {
+        return new Promise(function (resolve, reject) {
+            const url = "https://sepp-hrm.inf.h-brs.de/symfony/web/index.php/api/v1/employee/7/custom-field";
+            const xhr = new XMLHttpRequest();
+            xhr.open('PUT', url, true);
+            xhr.setRequestHeader('Authorization', 'Bearer ' + token.access_token);
+            xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=utf-8');
+            xhr.send(toXWwwFormUrlencoded(bonusData));
+
+            xhr.onload = function () {
+                const res = JSON.parse(xhr.responseText);
+                if (xhr.status === 200) {
+                    resolve(res);
+                } else {
+                    reject({
+                        status: this.status,
+                        statusText: xhr.statusText
+                    });
+                }
+            };
+        });
+    });
 }
 
 export {

@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import * as report from "../models/ReportSchema";
+import { updateBonusGehalt } from "../models/OrangeHRMAdapter";
 
 const router = Router();
 
@@ -45,10 +46,14 @@ router.post('/:sid/report/:year', async (req, res) => {
     }
 });
 
-// works
+// TODO: Connect to controller calculation function (Jenny)
 router.put('/:sid/report/:year', async (req, res) => {
     try {
         const message = await report.update(req.params.sid, req.params.year, req.body);
+        if (req.body.state === "released") {
+
+            updateBonusGehalt(req.params.sid, 302);
+        }
         return res.status(200).send(message);
     }
     catch (err) {
