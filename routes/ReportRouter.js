@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import * as report from "../models/ReportSchema";
-import { updateBonusGehalt } from "../models/OrangeHRMAdapter";
+import { updateBonusGehalt } from "../adapter/OrangeHRMAdapter";
 
 const router = Router();
 
