@@ -39,7 +39,7 @@ function readAll() {
 }
 
 function readBySid(sid) {
-    return SalesMen.find({sid: sid});
+    return SalesMen.findOne({sid: sid});
 }
 
 function create(salesMan) {
