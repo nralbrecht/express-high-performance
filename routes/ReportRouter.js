@@ -1,6 +1,9 @@
 import { Router } from 'express';
 import * as report from "../models/ReportSchema";
 import { updateBonusGehalt } from "../adapters/OrangeHRMAdapter";
+import { getOrdersBySalesmenAndYear } from "../adapters/OpenCRXAdapter";
+import { readBySidAndYear } from "../models/SocialEvaluationSchema";
+import { calculateOrdersTotal, calculateSocialTotal } from "../controller/BonusCalculator";
 
 const router = Router();
 
@@ -46,13 +49,14 @@ router.post('/:sid/report/:year', async (req, res) => {
     }
 });
 
-// TODO: Connect to controller calculation function (Jenny)
 router.put('/:sid/report/:year', async (req, res) => {
     try {
         const message = await report.update(req.params.sid, req.params.year, req.body);
         if (req.body.state === "released") {
-
-            updateBonusGehalt(req.params.sid, 302);
+            const orders = await getOrdersBySalesmenAndYear(req.params.sid, req.params.year);
+            const socials = await readBySidAndYear(req.params.sid, req.params.year);
+            const totalBonus = calculateOrdersTotal(orders) + calculateSocialTotal(socials.criteria);
+            await updateBonusGehalt(req.params.sid, totalBonus);
         }
         return res.status(200).send(message);
     }

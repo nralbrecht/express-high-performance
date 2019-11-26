@@ -43,7 +43,6 @@ async function getOrdersBySalesmenAndYear(sid, year) {
     const salesOrdersResponse = await getJsonAuthorised(salesOrdersUrl);
 
     for (const salesOrder of salesOrdersResponse.objects) {
-        console.log(salesOrder);
         if (salesOrder.contractState != 1410
             || salesOrder.disabled
             || new Date(salesOrder.activeOn).getFullYear() != year) {
@@ -83,6 +82,6 @@ async function getOrdersBySalesmenAndYear(sid, year) {
     return resultObject;
 }
 
-export default {
+export {
     getOrdersBySalesmenAndYear
 }
