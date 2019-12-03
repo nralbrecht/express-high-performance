@@ -1,22 +1,4 @@
-/* Structure */
-table {
-	width: 100%;
-}
-
-.mat-form-field {
-	font-size: 14px;
-	width: 100%;
-}
-
-tr.salesmen-element-row:hover {
-  background: #777;
-}
-
-tr.salesmen-element-row:active {
-	background: #efefef;
-}
-
- /* link */
+/* link */
 a {
     color: white;
     text-decoration: none;
@@ -28,4 +10,9 @@ a:visited {
 
 a:hover {
 	color: white;
+}
+
+/* content container */
+.content {
+    padding: 1rem;
 }
