@@ -53,7 +53,7 @@ function readBySid(sid) {
 }
 
 function readBySidAndYear(sid, year) {
-    return Report.find({sid: sid, year: year});
+    return Report.findOne({sid: sid, year: year});
 }
 
 function create(sid, year, data) {

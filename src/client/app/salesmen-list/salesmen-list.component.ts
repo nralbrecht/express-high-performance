@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { SalesmenService } from "../salesmen/salesmen.service";
+import {Salesman, SalesmenService} from "../salesmen/salesmen.service";
 
 
 @Component({
@@ -8,22 +8,21 @@ import { SalesmenService } from "../salesmen/salesmen.service";
   templateUrl: './salesmen-list.component.html',
   styleUrls: ['./salesmen-list.component.scss']
 })
-export class SalesmenListComponent {
+export class SalesmenListComponent implements OnInit {
   salesmenService = new SalesmenService();
-  dataSource;
-  elementData;
+  elementData: Salesman[];
+  dataSource: MatTableDataSource<Salesman>;
   displayedColumns: string[];
 
-constructor() {
-    this.initt();
-}
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
+  constructor() { }
 
-  async initt() {
+  async ngOnInit() {
       this.elementData = await this.salesmenService.getSalesmen();
       this.displayedColumns = ['sid', 'firstName', 'lastName', 'jobTitle'];
       this.dataSource = new MatTableDataSource(this.elementData);
+  }
+
+  applyFilter(filterValue: string) {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 }

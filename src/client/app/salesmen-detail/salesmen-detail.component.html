@@ -1,1 +1,100 @@
-<p>salesman {{ salesman }}</p>
+<mat-card class="outer-card">
+    <mat-card-header>
+        <mat-card-title>Performance record</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <ul class="employee-data">
+            <li><b>ID</b> {{ salesman.sid }}</li>
+            <li><b>Name</b> {{ salesman.firstName }} {{ salesman.lastName }}</li>
+            <li><b>Job title</b> {{ salesman.jobTitle }}</li>
+        </ul>
+    </mat-card-content>
+</mat-card>
+
+<mat-card class="outer-card">
+    <mat-card class="inner-card">
+        <mat-card-content>
+            <ul class="record-data">
+                <li>
+                    <b>Year</b>
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="selectedYear" name="year" (selectionChange)="onYearChosen()">
+                            <mat-option *ngFor="let year of displayedYears" [value]="year">
+                                {{year}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </li>
+                <li>
+                    <b>State</b>
+                    <mat-form-field>
+                        <mat-select [(ngModel)]="report.state" name="state">
+                            <mat-option *ngFor="let state of displayedStates" [value]="state">
+                                {{state}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </li>
+                <li>
+                    <button mat-flat-button color="primary" class="highlight">
+                        <b>Bonus :-)</b>
+                    </button>
+                </li>
+            </ul>
+        </mat-card-content>
+    </mat-card>
+
+    <mat-accordion>
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Orders evaluation
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            :-)
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Social performance evaluation
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <table mat-table [dataSource]="report.social.criteria" class="mat-elevation-z8">
+                <ng-container matColumnDef="description">
+                    <th mat-header-cell *matHeaderCellDef> Description </th>
+                    <td mat-cell *matCellDef="let socialCriterion"> {{socialCriterion.description}} </td>
+                    <td mat-footer-cell *matFooterCellDef> Total </td>
+                </ng-container>
+                <ng-container matColumnDef="targetValue">
+                    <th mat-header-cell *matHeaderCellDef> Target value </th>
+                    <td mat-cell *matCellDef="let socialCriterion"> {{socialCriterion.targetValue}} </td>
+                    <td mat-footer-cell *matFooterCellDef> </td>
+                </ng-container>
+                <ng-container matColumnDef="actualValue">
+                    <th mat-header-cell *matHeaderCellDef> Actual value </th>
+                    <td mat-cell *matCellDef="let socialCriterion"> {{socialCriterion.actualValue}} </td>
+                    <td mat-footer-cell *matFooterCellDef> EUR {{ getSocialBonus() }} </td>
+                </ng-container>
+                <tr mat-header-row *matHeaderRowDef="displayedSocialColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedSocialColumns;"></tr>
+                <tr mat-footer-row *matFooterRowDef="displayedSocialColumns"></tr>
+            </table>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    Remarks
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <mat-form-field class="remarks-field">
+                <textarea matInput placeholder="Remarks">{{report.remarks}}</textarea>
+            </mat-form-field>
+        </mat-expansion-panel>
+    </mat-accordion>
+</mat-card>
+
+<div class="outer-card">
+    <button mat-flat-button color="accent" [routerLink]="['']">Back</button>
+</div>

@@ -1,0 +1,73 @@
+b {
+    margin-right: 10px;
+}
+
+.highlight {
+    pointer-events: none;
+}
+
+.outer-card {
+    margin: 20px;
+}
+
+.inner-card {
+    margin-bottom: 15px;
+}
+
+mat-card-title {
+    color: #673AB7;
+}
+
+mat-panel-title {
+    font-weight: bold;
+}
+
+.record-data {
+    display: flex;
+    justify-content: space-between;
+    margin: 0px;
+    padding: 0px;
+}
+
+.record-data li {
+    display: block;
+}
+
+
+// Employee data
+.employee-data {
+    display: flex;
+    justify-content: space-between;
+    margin: 16px;
+    padding: 0px;
+}
+.employee-data li {
+    display: block;
+}
+
+
+// Report
+mat-form-field {
+    width: 120px;
+}
+
+
+// Social performance evaluation
+table {
+    width: 100%;
+}
+
+tr.mat-footer-row {
+    font-weight: bold;
+}
+
+
+// Remarks
+.remarks-field {
+    width: 100%;
+}
+
+.remarks-field textarea {
+    resize: none;
+    height: 100px;
+}

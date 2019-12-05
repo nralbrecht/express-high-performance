@@ -10,8 +10,18 @@ import { MatTableModule } from '@angular/material/table';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatSelectModule } from '@angular/material/select';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatButtonModule } from '@angular/material/button';
+
+
+
+
 import { SalesmenListComponent } from './salesmen-list/salesmen-list.component';
 import { SalesmenDetailComponent } from './salesmen-detail/salesmen-detail.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
     declarations: [AppComponent, SalesmenListComponent, SalesmenDetailComponent],
@@ -23,7 +33,13 @@ import { SalesmenDetailComponent } from './salesmen-detail/salesmen-detail.compo
         MatTableModule,
         MatFormFieldModule,
         MatInputModule,
-        MatIconModule
+        MatIconModule,
+        MatCardModule,
+        MatExpansionModule,
+        MatSelectModule,
+        FormsModule,
+        MatChipsModule,
+        MatButtonModule
     ],
     providers: [],
     bootstrap: [AppComponent]
