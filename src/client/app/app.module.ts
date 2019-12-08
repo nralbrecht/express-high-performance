@@ -15,16 +15,14 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
-
-
-
+import { FormsModule } from "@angular/forms";
 
 import { SalesmenListComponent } from './salesmen-list/salesmen-list.component';
 import { SalesmenDetailComponent } from './salesmen-detail/salesmen-detail.component';
-import {FormsModule} from "@angular/forms";
+import { OrderEvaluationComponent } from './order-evaluation/order-evaluation.component';
 
 @NgModule({
-    declarations: [AppComponent, SalesmenListComponent, SalesmenDetailComponent],
+    declarations: [AppComponent, SalesmenListComponent, SalesmenDetailComponent, OrderEvaluationComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,

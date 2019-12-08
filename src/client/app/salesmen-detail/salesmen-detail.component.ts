@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import {Salesman, SalesmenService} from "../salesmen/salesmen.service";
+import { Salesman, SalesmenService } from "../salesmen/salesmen.service";
 import {
     PerformanceService,
     PerformanceRecord

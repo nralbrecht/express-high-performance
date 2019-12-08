@@ -1,12 +1,12 @@
 import { Router } from 'express';
-import crx from '../adapters/OpenCRXAdapter';
+import { getOrdersBySalesmenAndYear } from '../adapters/OpenCRXAdapter';
 import { calculateOrdersTotal } from '../controller/BonusCalculator';
 
 const router = Router();
 
 router.get('/:sid/report/:year/orders', async (req, res) => {
     try {
-        const orders = await crx.getOrdersBySalesmenAndYear(req.params.sid, +req.params.year);
+        const orders = await getOrdersBySalesmenAndYear(req.params.sid, +req.params.year);
 
         const totalOrderBonus = calculateOrdersTotal(orders);
 
