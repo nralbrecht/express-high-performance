@@ -11,11 +11,11 @@ const router = Router();
 router.get('/:sid/report', async (req, res) => {
     try {
         const reports = await report.readBySid(req.params.sid);
-        return res.header('Access-Control-Allow-Origin', "*").status(200).send(reports);
+        return res.status(200).send(reports);
     }
     catch (err) {
         console.log(err);
-        return res.header('Access-Control-Allow-Origin', "*").status(400).send("Error!");
+        return res.status(400).send("Error!");
     }
 });
 
@@ -25,11 +25,11 @@ router.get('/:sid/report/:year', async (req, res) => {
         const reports = await report.readBySidAndYear(req.params.sid, req.params.year);
         if (reports.length === 0)
             return res.status(400).send("Could not be found! Report record does not exist.");
-        return res.header('Access-Control-Allow-Origin', "*").status(200).send(reports);
+        return res.status(200).send(reports);
     }
     catch (err) {
         console.log(err);
-        return res.header('Access-Control-Allow-Origin', "*").status(400).send("Error!");
+        return res.status(400).send("Error!");
     }
 });
 
@@ -37,7 +37,7 @@ router.get('/:sid/report/:year', async (req, res) => {
 router.post('/:sid/report/:year', async (req, res) => {
     try {
         const reports = await report.create(req.params.sid, req.params.year, req.body);
-        return res.header('Access-Control-Allow-Origin', "*").status(200).send(reports);
+        return res.status(200).send(reports);
     }
     catch (err) {
         // duplicate key error
@@ -45,7 +45,7 @@ router.post('/:sid/report/:year', async (req, res) => {
             return res.status(400).send("Report was not created! Report record for sid and year already exists.");
         // different error
         console.log(err);
-        return res.header('Access-Control-Allow-Origin', "*").status(400).send("Error!");
+        return res.status(400).send("Error!");
     }
 });
 
@@ -58,11 +58,11 @@ router.put('/:sid/report/:year', async (req, res) => {
             const totalBonus = calculateOrdersTotal(orders) + calculateSocialTotal(socials.criteria);
             await updateBonusGehalt(req.params.sid, totalBonus);
         }
-        return res.header('Access-Control-Allow-Origin', "*").status(200).send(message);
+        return res.status(200).send(message);
     }
     catch (err) {
         console.log(err);
-        return res.header('Access-Control-Allow-Origin', "*").status(400).send("Error!");
+        return res.status(400).send("Error!");
     }
 });
 

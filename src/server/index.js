@@ -5,6 +5,7 @@ import start from './db/MongoStarter';
 import { getAbsoluteFSPath } from 'swagger-ui-dist';
 import replace from 'replace';
 import path from 'path';
+import cors from 'cors';
 
 start();
 
@@ -20,6 +21,8 @@ replace({
     recursive: false,
     silent: true,
 });
+
+app.use(cors());
 
 app.use(
     bodyParser.urlencoded({
