@@ -16,13 +16,13 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from "@angular/forms";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 
 import { SalesmenListComponent } from './salesmen-list/salesmen-list.component';
 import { SalesmenDetailComponent } from './salesmen-detail/salesmen-detail.component';
-import { OrderEvaluationComponent } from './order-evaluation/order-evaluation.component';
 
 @NgModule({
-    declarations: [AppComponent, SalesmenListComponent, SalesmenDetailComponent, OrderEvaluationComponent],
+    declarations: [AppComponent, SalesmenListComponent, SalesmenDetailComponent],
     imports: [
         BrowserModule,
         AppRoutingModule,
@@ -37,7 +37,8 @@ import { OrderEvaluationComponent } from './order-evaluation/order-evaluation.co
         MatSelectModule,
         FormsModule,
         MatChipsModule,
-        MatButtonModule
+        MatButtonModule,
+        MatProgressSpinnerModule
     ],
     providers: [],
     bootstrap: [AppComponent]

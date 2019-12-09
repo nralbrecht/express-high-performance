@@ -5,6 +5,7 @@ import {
     PerformanceService,
     PerformanceRecord
 } from "../performance/performance.service";
+import { OrderService, OrderEvaluation } from "../order/order.service";
 
 
 @Component({
@@ -13,21 +14,25 @@ import {
   styleUrls: ['./salesmen-detail.component.scss']
 })
 export class SalesmenDetailComponent implements OnInit {
-    salesmenService = new SalesmenService();
-    performanceService = new PerformanceService();
-
     salesman: Salesman;
     report: PerformanceRecord;
     sid: number;
     selectedYear: number;
     totalBonus: number;
+    orders: OrderEvaluation;
 
     // displayed properties
     displayedYears: number[];
     displayedStates: string[] = ['open', 'released'];
     displayedSocialColumns: string[] = ['description', 'targetValue', 'actualValue'];
+    displayedOrderColumns: string[] = ['product', 'client', 'ranking', 'items'];
 
-    constructor(private route: ActivatedRoute) { }
+    constructor(
+        private route: ActivatedRoute,
+        private orderService: OrderService,
+        private salesmenService: SalesmenService,
+        private performanceService: PerformanceService
+    ) { }
 
     ngOnInit() {
         this.route.paramMap.subscribe(async params => {
@@ -43,6 +48,7 @@ export class SalesmenDetailComponent implements OnInit {
 
     async onYearChosen(){
         this.report = await this.performanceService.getPerformanceRecordBySidAndYear(this.sid, this.selectedYear);
+        this.orders = await this.orderService.getOrdersBySidAndYear(this.sid, this.selectedYear);
     }
 
     getSocialBonus() {

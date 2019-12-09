@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 export interface OrderEvaluation {
     orders: Order[];
-    totalSum: number;
+    totalBonus: number;
 }
 
 export interface Order {
@@ -33,8 +33,7 @@ export interface Product {
 export class OrderService {
     async getOrdersBySidAndYear(sid: number, year: number) : Promise<OrderEvaluation> {
         const response = await fetch("http://localhost:8080/salesmen/" + sid + "/report/" + year + "/orders");
-        const orders = await response.json();
 
-        return orders;
+        return await response.json();
     }
 }
