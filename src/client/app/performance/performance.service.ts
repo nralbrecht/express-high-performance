@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { OrderService, OrderEvaluation } from "../order/order.service";
 
 export interface PerformanceRecord {
     sid: number;
@@ -9,14 +10,9 @@ export interface PerformanceRecord {
     remarks: string;
 }
 
-// TODO: define interface
-export interface OrderEvaluation {
-    dummy: string;
-}
-
 export interface SocialEvaluation {
     criteria: SocialCriterion[];
-    totalSum: number;
+    totalBonus: number;
 }
 
 export interface SocialCriterion {
@@ -42,7 +38,7 @@ export class PerformanceService {
         '6': 'Integrity to Company'
     };
 
-  constructor() { }
+  constructor(private orderService: OrderService) { }
 
   async getYearsBySid(sid) {
       const url = "http://localhost:8080/salesmen/" + sid + "/report";
@@ -66,7 +62,7 @@ export class PerformanceService {
 
       // TODO: get orders from api
       // get orders
-      const orders = { dummy: "dummy" };
+      const orders = await this.orderService.getOrdersBySidAndYear(sid, year);
 
       // get social
       const urlSocial = "http://localhost:8080/salesmen/" + sid + "/report/" + year + "/social";
@@ -80,7 +76,7 @@ export class PerformanceService {
       });
       const social = {
           criteria: criteriaWithDescription,
-          totalSum: socialRecords.totalBonus
+          totalBonus: socialRecords.totalBonus
       };
 
       // return PerformanceRecord

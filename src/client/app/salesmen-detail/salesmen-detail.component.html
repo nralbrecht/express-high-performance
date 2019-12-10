@@ -37,7 +37,7 @@
                 </li>
                 <li>
                     <button mat-flat-button color="primary" class="highlight">
-                        <b>Bonus :-)</b>
+                        <b>Bonus {{ getTotalBonus() | currency:'EUR' }}</b>
                     </button>
                 </li>
             </ul>
@@ -52,12 +52,12 @@
                 </mat-panel-title>
             </mat-expansion-panel-header>
 
-            <div class="spinner-container" *ngIf="!orders">
+            <div class="spinner-container" *ngIf="!report.orders">
                 <mat-spinner></mat-spinner>
             </div>
 
             <!-- Tabelle with entrys  -->
-            <table mat-table [dataSource]="orders.orders" class="mat-elevation-z8">
+            <table mat-table [dataSource]="report.orders.orders" class="mat-elevation-z8">
                 <ng-container matColumnDef="product">
                     <th mat-header-cell *matHeaderCellDef> Name of Product </th>
                     <td mat-cell *matCellDef="let order"> {{ order.positions[0].product.name }} </td>
@@ -76,7 +76,7 @@
                 <ng-container matColumnDef="items">
                     <th mat-header-cell *matHeaderCellDef> Items </th>
                     <td mat-cell *matCellDef="let order"> {{ order.positions[0].quantity  | number: '1.0-0' }} </td>
-                    <td mat-footer-cell *matFooterCellDef> {{ orders.totalBonus | currency:'EUR' }} </td>
+                    <td mat-footer-cell *matFooterCellDef> {{ report.orders.totalBonus | currency:'EUR' }} </td>
                 </ng-container>
 
                 <tr mat-header-row *matHeaderRowDef="displayedOrderColumns"></tr>
@@ -107,7 +107,7 @@
                 <ng-container matColumnDef="actualValue">
                     <th mat-header-cell *matHeaderCellDef> Actual value </th>
                     <td mat-cell *matCellDef="let socialCriterion"> {{socialCriterion.actualValue}} </td>
-                    <td mat-footer-cell *matFooterCellDef> {{ getSocialBonus() | currency:'EUR' }} </td>
+                    <td mat-footer-cell *matFooterCellDef> {{ report.social.totalBonus | currency:'EUR' }} </td>
                 </ng-container>
                 <tr mat-header-row *matHeaderRowDef="displayedSocialColumns"></tr>
                 <tr mat-row *matRowDef="let row; columns: displayedSocialColumns;"></tr>

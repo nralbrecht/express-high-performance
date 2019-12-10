@@ -5,8 +5,6 @@ import {
     PerformanceService,
     PerformanceRecord
 } from "../performance/performance.service";
-import { OrderService, OrderEvaluation } from "../order/order.service";
-
 
 @Component({
   selector: 'app-salesmen-detail',
@@ -19,7 +17,6 @@ export class SalesmenDetailComponent implements OnInit {
     sid: number;
     selectedYear: number;
     totalBonus: number;
-    orders: OrderEvaluation;
 
     // displayed properties
     displayedYears: number[];
@@ -29,7 +26,6 @@ export class SalesmenDetailComponent implements OnInit {
 
     constructor(
         private route: ActivatedRoute,
-        private orderService: OrderService,
         private salesmenService: SalesmenService,
         private performanceService: PerformanceService
     ) { }
@@ -48,10 +44,9 @@ export class SalesmenDetailComponent implements OnInit {
 
     async onYearChosen(){
         this.report = await this.performanceService.getPerformanceRecordBySidAndYear(this.sid, this.selectedYear);
-        this.orders = await this.orderService.getOrdersBySidAndYear(this.sid, this.selectedYear);
     }
 
-    getSocialBonus() {
-        return this.report.social.totalSum;
+    getTotalBonus() {
+        return this.report.social.totalBonus + this.report.orders.totalBonus;
     }
 }
