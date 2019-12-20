@@ -10,5 +10,5 @@ export class PerformanceEvaluationComponent {
   @Input() social: SocialCriterion[];
   @Input() totalBonus: number;
 
-  displayedColumns: string[] = ['description', 'targetValue', 'actualValue'];
+  displayedColumns: string[] = ['description', 'targetValue', 'actualValue', 'bonus'];
 }

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import * as socialEvaluation from "../models/SocialEvaluationSchema";
-import { calculateSocialTotal } from "../controller/BonusCalculator";
+import { calculateSocialTotalBonus } from "../controller/BonusCalculator";
 
 const router = Router();
 
@@ -12,7 +12,7 @@ router.get('/:sid/report/:year/social', async (req, res) => {
         }
         const social = {
             "social": records.criteria,
-            "totalBonus": calculateSocialTotal(records.criteria)
+            "totalBonus": calculateSocialTotalBonus(records.criteria)
         };
         return res.status(200).send(social);
     }

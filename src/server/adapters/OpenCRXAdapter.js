@@ -1,5 +1,6 @@
 import fetch from "node-fetch"
 import { Base64 } from 'js-base64';
+import { calculateOrderBonus } from '../controller/BonusCalculator';
 
 const CREDENTIALS = {
     "username": "guest",
@@ -75,6 +76,8 @@ async function getOrdersBySalesmenAndYear(sid, year) {
                 }
             });
         }
+
+        salesOrderResult.bonus = calculateOrderBonus(salesOrderResult);
 
         resultObject.push(salesOrderResult);
     }

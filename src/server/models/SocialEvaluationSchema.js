@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+import { calculateSocialBonus } from '../controller/BonusCalculator'
 
 const socialEvaluationSchema = new mongoose.Schema({
     sid: {
@@ -61,19 +61,40 @@ function init() {
             ]
         );
     });
-
 }
 
-function readAll() {
-    return SocialEvaluation.find();
+function addBonusToSocialEvaluation(evaluation) {
+    for (let i = 0; i < evaluation.criteria.length; i++) {
+        let bonus = calculateSocialBonus(evaluation.criteria[i]);
+
+        evaluation.criteria[i] = {
+            "_id": evaluation.criteria[i]._id,
+            "goalId": evaluation.criteria[i].goalId,
+            "targetValue": evaluation.criteria[i].targetValue,
+            "actualValue": evaluation.criteria[i].actualValue,
+            "bonus": bonus
+        };
+    }
+
+    return evaluation;
 }
 
-function readBySid(sid) {
-    return SocialEvaluation.find({sid: sid});
+async function readAll() {
+    let social = await SocialEvaluation.find({sid: sid});
+
+    return social.map((social) => addBonusToSocialEvaluation(social));
 }
 
-function readBySidAndYear(sid, year) {
-    return SocialEvaluation.findOne({sid: sid, year: year});
+async function readBySid(sid) {
+    let social = await SocialEvaluation.find({sid: sid});
+
+    return social.map((social) => addBonusToSocialEvaluation(social));
+}
+
+async function readBySidAndYear(sid, year) {
+    let social = await SocialEvaluation.findOne({sid: sid, year: year});
+
+    return addBonusToSocialEvaluation(social);
 }
 
 function create(sid, year, criteria) {
@@ -95,7 +116,6 @@ function update(sid, year, criteria) {
 function deleteAllBySid(sid) {
     return SocialEvaluation.deleteMany({sid: sid});
 }
-
 
 export default init();
 

@@ -1,5 +1,4 @@
 import mongoose from "mongoose";
-import {SocialEvaluation} from "./SocialEvaluationSchema";
 
 const reportSchema = new mongoose.Schema({
     sid: {
@@ -77,7 +76,6 @@ function update(sid, year, data) {
 function deleteAllBySid(sid) {
     return Report.deleteMany({sid: sid});
 }
-
 
 export default init();
 

@@ -522,6 +522,10 @@
             "items": {
               "$ref": "#/components/schemas/Position"
             }
+          },
+          "bonus": {
+            "type": "integer",
+            "format": "int32"
           }
         }
       },
@@ -624,6 +628,10 @@
             "format": "int32"
           },
           "actualValue": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "bonus": {
             "type": "integer",
             "format": "int32"
           }

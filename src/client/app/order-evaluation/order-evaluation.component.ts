@@ -10,5 +10,5 @@ export class OrderEvaluationComponent {
   @Input() orders: Order[];
   @Input() totalBonus: number;
 
-  displayedColumns: string[] = ['product', 'client', 'ranking', 'items'];
+  displayedColumns: string[] = ['product', 'client', 'ranking', 'items', 'bonus'];
 }
