@@ -4,8 +4,8 @@ import { SalesmenListComponent } from './salesmen-list/salesmen-list.component';
 import { SalesmenDetailComponent } from './salesmen-detail/salesmen-detail.component';
 
 const routes: Routes = [
-    { path: '', component: SalesmenListComponent },
-    { path: 'salesman/:sid', component: SalesmenDetailComponent },
+  { path: '', component: SalesmenListComponent },
+  { path: 'salesman/:sid', component: SalesmenDetailComponent },
 ];
 
 @NgModule({
