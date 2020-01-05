@@ -12,6 +12,9 @@ import {
   styleUrls: ['./salesmen-detail.component.scss']
 })
 export class SalesmenDetailComponent implements OnInit {
+  isLoadingSalesman: boolean = true;
+  isLoadingYear: boolean = true;
+
   salesman: Salesman;
   report: PerformanceRecord;
   sid: number;
@@ -30,6 +33,9 @@ export class SalesmenDetailComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(async params => {
+      this.isLoadingSalesman = true;
+      this.isLoadingYear = true;
+
       this.sid = +params.get('sid');
       this.salesman = await this.salesmenService.getSalesmanBySid(this.sid);
       this.displayedYears = await this.performanceService.getYearsBySid(this.sid);
@@ -38,6 +44,8 @@ export class SalesmenDetailComponent implements OnInit {
         this.displayedYears = [ new Date().getFullYear() ];
       }
 
+      this.isLoadingSalesman = false;
+
       // select the newest year and fill in the cards
       this.selectedYear = this.displayedYears[0];
       this.onYearChosen();
@@ -45,7 +53,11 @@ export class SalesmenDetailComponent implements OnInit {
   }
 
   async onYearChosen() {
+    this.isLoadingYear = true;
+
     this.report = await this.performanceService.getPerformanceRecordBySidAndYear(this.sid, this.selectedYear);
+
+    this.isLoadingYear = false;
   }
 
   getTotalBonus() {

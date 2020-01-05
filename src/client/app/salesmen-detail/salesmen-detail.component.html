@@ -1,88 +1,94 @@
-<div class="spinner-container" *ngIf="!report">
+<div class="spinner-container" *ngIf="isLoadingSalesman;else salesmanContainer">
   <mat-spinner></mat-spinner>
 </div>
+<ng-template #salesmanContainer>
+  <mat-card class="outer-card">
+    <mat-card-header>
+      <mat-card-title>Performance record</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <ul class="employee-data">
+        <li><b>ID</b> {{ salesman.sid }}</li>
+        <li><b>Name</b> {{ salesman.firstName }} {{ salesman.lastName }}</li>
+        <li><b>Job title</b> {{ salesman.jobTitle }}</li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
 
-<mat-card class="outer-card">
-	<mat-card-header>
-		<mat-card-title>Performance record</mat-card-title>
-	</mat-card-header>
-	<mat-card-content>
-		<ul class="employee-data">
-			<li><b>ID</b> {{ salesman.sid }}</li>
-			<li><b>Name</b> {{ salesman.firstName }} {{ salesman.lastName }}</li>
-			<li><b>Job title</b> {{ salesman.jobTitle }}</li>
-		</ul>
-	</mat-card-content>
-</mat-card>
+  <div class="spinner-container" *ngIf="isLoadingYear;else performanceContainer">
+    <mat-spinner></mat-spinner>
+  </div>
+  <ng-template #performanceContainer>
+    <mat-card class="outer-card">
+      <mat-card class="inner-card">
+        <mat-card-content>
+          <ul class="record-data">
+            <li>
+              <b>Year</b>
+              <mat-form-field>
+                <mat-select [(ngModel)]="selectedYear" name="year" (selectionChange)="onYearChosen()">
+                  <mat-option *ngFor="let year of displayedYears" [value]="year">
+                    {{year}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </li>
+            <li>
+              <b>State</b>
+              <mat-form-field>
+                <mat-select [(ngModel)]="report.state" name="state">
+                  <mat-option *ngFor="let state of displayedStates" [value]="state">
+                    {{state}}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </li>
+            <li>
+              <button mat-flat-button color="primary" class="highlight">
+                <b>Bonus {{ getTotalBonus() | currency:'EUR' }}</b>
+              </button>
+            </li>
+          </ul>
+        </mat-card-content>
+      </mat-card>
 
-<mat-card class="outer-card">
-	<mat-card class="inner-card">
-		<mat-card-content>
-			<ul class="record-data">
-				<li>
-					<b>Year</b>
-					<mat-form-field>
-						<mat-select [(ngModel)]="selectedYear" name="year" (selectionChange)="onYearChosen()">
-							<mat-option *ngFor="let year of displayedYears" [value]="year">
-								{{year}}
-							</mat-option>
-						</mat-select>
-					</mat-form-field>
-				</li>
-				<li>
-					<b>State</b>
-					<mat-form-field>
-						<mat-select [(ngModel)]="report.state" name="state">
-							<mat-option *ngFor="let state of displayedStates" [value]="state">
-								{{state}}
-							</mat-option>
-						</mat-select>
-					</mat-form-field>
-				</li>
-				<li>
-					<button mat-flat-button color="primary" class="highlight">
-						<b>Bonus {{ getTotalBonus() | currency:'EUR' }}</b>
-					</button>
-				</li>
-			</ul>
-		</mat-card-content>
-	</mat-card>
+      <mat-accordion>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Orders evaluation
+            </mat-panel-title>
+          </mat-expansion-panel-header>
 
-	<mat-accordion>
-		<mat-expansion-panel>
-			<mat-expansion-panel-header>
-				<mat-panel-title>
-					Orders evaluation
-				</mat-panel-title>
-			</mat-expansion-panel-header>
+          <app-order-evaluation [orders]="report.orders.orders" [totalBonus]="report.orders.totalBonus"></app-order-evaluation>
+        </mat-expansion-panel>
 
-			<app-order-evaluation [orders]="report.orders.orders" [totalBonus]="report.orders.totalBonus"></app-order-evaluation>
-		</mat-expansion-panel>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Social performance evaluation
+            </mat-panel-title>
+          </mat-expansion-panel-header>
 
-		<mat-expansion-panel>
-			<mat-expansion-panel-header>
-				<mat-panel-title>
-					Social performance evaluation
-				</mat-panel-title>
-			</mat-expansion-panel-header>
+          <app-performance-evaluation [social]="report.social.criteria" [totalBonus]="report.social.totalBonus"></app-performance-evaluation>
 
-			<app-performance-evaluation [social]="report.social.criteria" [totalBonus]="report.social.totalBonus"></app-performance-evaluation>
+        </mat-expansion-panel>
 
-		</mat-expansion-panel>
-
-		<mat-expansion-panel>
-			<mat-expansion-panel-header>
-				<mat-panel-title>
-					Remarks
-				</mat-panel-title>
-			</mat-expansion-panel-header>
-			<mat-form-field floatLabel="never" class="remarks-field">
-				<textarea matInput placeholder="Write your remarks here" [(ngModel)]="report.remarks" (blur)="updateReport()"></textarea>
-			</mat-form-field>
-		</mat-expansion-panel>
-	</mat-accordion>
-</mat-card>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              Remarks
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <mat-form-field floatLabel="never" class="remarks-field">
+            <textarea matInput placeholder="Write your remarks here" [(ngModel)]="report.remarks" (blur)="updateReport()"></textarea>
+          </mat-form-field>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-card>
+  </ng-template>
+</ng-template>
 
 <div class="outer-card">
-	<button mat-flat-button color="accent" [routerLink]="['']">Back</button>
+  <button mat-flat-button color="accent" [routerLink]="['']">Back</button>
 </div>
