@@ -44,11 +44,15 @@ export class SalesmenDetailComponent implements OnInit {
     });
   }
 
-  async onYearChosen(){
+  async onYearChosen() {
     this.report = await this.performanceService.getPerformanceRecordBySidAndYear(this.sid, this.selectedYear);
   }
 
   getTotalBonus() {
     return this.report.social.totalBonus + this.report.orders.totalBonus;
+  }
+
+  updateReport() {
+    this.performanceService.updateReportBySidAndYear(this.sid, this.selectedYear, this.report.remarks, this.report.state);
   }
 }

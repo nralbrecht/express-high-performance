@@ -76,8 +76,8 @@
 					Remarks
 				</mat-panel-title>
 			</mat-expansion-panel-header>
-			<mat-form-field class="remarks-field">
-				<textarea matInput placeholder="Remarks">{{report.remarks}}</textarea>
+			<mat-form-field floatLabel="never" class="remarks-field">
+				<textarea matInput placeholder="Write your remarks here" [(ngModel)]="report.remarks" (blur)="updateReport()"></textarea>
 			</mat-form-field>
 		</mat-expansion-panel>
 	</mat-accordion>

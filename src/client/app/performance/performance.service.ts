@@ -67,11 +67,13 @@ export class PerformanceService {
     const responseSocial = await fetch(urlSocial);
     const socialRecords = await responseSocial.json();
     const criteriaWithDescription = [];
+
     socialRecords.social.forEach(socialRecord => {
       const id = socialRecord.goalId;
       socialRecord.description = this.socialDescription[id];
       criteriaWithDescription.push(socialRecord);
     });
+
     const social = {
       criteria: criteriaWithDescription,
       totalBonus: socialRecords.totalBonus
@@ -86,5 +88,23 @@ export class PerformanceService {
       social: social,
       remarks: remarks
     }
+  }
+
+  async updateReportBySidAndYear(sid: number, year: number, newRemark: string, newState: string) {
+    const urlReport = `http://localhost:8080/salesmen/${sid}/report/${year}`;
+
+    let response = await fetch(urlReport, {
+      method: "PUT",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        state: newState,
+        remark: newRemark
+      })
+    });
+
+    return response.ok;
   }
 }

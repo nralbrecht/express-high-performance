@@ -7,7 +7,6 @@ import { calculateOrdersTotal, calculateSocialTotal } from "../controller/BonusC
 
 const router = Router();
 
-// works
 router.get('/:sid/report', async (req, res) => {
     try {
         const reports = await report.readBySid(req.params.sid);
@@ -19,7 +18,6 @@ router.get('/:sid/report', async (req, res) => {
     }
 });
 
-// works
 router.get('/:sid/report/:year', async (req, res) => {
     try {
         const reports = await report.readBySidAndYear(req.params.sid, req.params.year);
@@ -33,31 +31,34 @@ router.get('/:sid/report/:year', async (req, res) => {
     }
 });
 
-// works
 router.post('/:sid/report/:year', async (req, res) => {
     try {
         const reports = await report.create(req.params.sid, req.params.year, req.body);
         return res.status(200).send(reports);
     }
     catch (err) {
-        // duplicate key error
-        if (err.code === 11000)
+        if (err.code === 11000) {
+            // duplicate key error
             return res.status(400).send("Report was not created! Report record for sid and year already exists.");
-        // different error
-        console.log(err);
-        return res.status(400).send("Error!");
+        }
+        else {
+            console.log(err);
+            return res.status(400).send("Error!");
+        }
     }
 });
 
 router.put('/:sid/report/:year', async (req, res) => {
     try {
         const message = await report.update(req.params.sid, req.params.year, req.body);
+
         if (req.body.state === "released") {
             const orders = await getOrdersBySalesmenAndYear(req.params.sid, req.params.year);
             const socials = await readBySidAndYear(req.params.sid, req.params.year);
             const totalBonus = calculateOrdersTotal(orders) + calculateSocialTotal(socials.criteria);
             await updateBonusGehalt(req.params.sid, totalBonus);
         }
+
         return res.status(200).send(message);
     }
     catch (err) {
