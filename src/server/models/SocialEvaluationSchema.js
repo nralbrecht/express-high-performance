@@ -60,6 +60,18 @@ function init() {
                 {"goalId":6,"targetValue":4,"actualValue":3}
             ]
         );
+        create(
+            91337,
+            2019,
+            [
+                {"goalId":1,"targetValue":4,"actualValue":3},
+                {"goalId":2,"targetValue":4,"actualValue":4},
+                {"goalId":3,"targetValue":4,"actualValue":2},
+                {"goalId":4,"targetValue":4,"actualValue":4},
+                {"goalId":5,"targetValue":4,"actualValue":4},
+                {"goalId":6,"targetValue":4,"actualValue":2}
+            ]
+        );
     });
 }
 
