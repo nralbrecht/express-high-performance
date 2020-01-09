@@ -40,6 +40,12 @@ function init() {
             "state": "released",
             "remark": "bla bli blub"
         }));
+        Report.create(new Report({
+            "sid": 91337,
+            "year": 2019,
+            "state": "open",
+            "remark": "bla bli blub"
+        }))
     });
 }
 
