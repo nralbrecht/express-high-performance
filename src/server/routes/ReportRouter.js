@@ -3,7 +3,7 @@ import * as report from "../models/ReportSchema";
 import { updateBonusGehalt } from "../adapters/OrangeHRMAdapter";
 import { getOrdersBySalesmenAndYear } from "../adapters/OpenCRXAdapter";
 import { readBySidAndYear } from "../models/SocialEvaluationSchema";
-import { calculateOrdersTotal, calculateSocialTotal } from "../controller/BonusCalculator";
+import { calculateOrdersTotalBonus, calculateSocialTotalBonus } from "../controller/BonusCalculator";
 
 const router = Router();
 
@@ -21,8 +21,11 @@ router.get('/:sid/report', async (req, res) => {
 router.get('/:sid/report/:year', async (req, res) => {
     try {
         const reports = await report.readBySidAndYear(req.params.sid, req.params.year);
-        if (reports.length === 0)
-            return res.status(400).send("Could not be found! Report record does not exist.");
+
+        if (!reports) {
+            return res.status(404).send("Could not be found! Report record does not exist.");
+        }
+
         return res.status(200).send(reports);
     }
     catch (err) {
@@ -55,7 +58,7 @@ router.put('/:sid/report/:year', async (req, res) => {
         if (req.body.state === "released") {
             const orders = await getOrdersBySalesmenAndYear(req.params.sid, req.params.year);
             const socials = await readBySidAndYear(req.params.sid, req.params.year);
-            const totalBonus = calculateOrdersTotal(orders) + calculateSocialTotal(socials.criteria);
+            const totalBonus = calculateOrdersTotalBonus(orders) + calculateSocialTotalBonus(socials.criteria);
             await updateBonusGehalt(req.params.sid, totalBonus);
         }
 
