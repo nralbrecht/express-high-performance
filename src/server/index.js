@@ -31,13 +31,18 @@ app.use(
 );
 app.use(bodyParser.json());
 
+app.use(function(req, res, next) {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} ${JSON.stringify(req.body)}`);
+    next();
+});
+
 app.use('/salesmen', routes.order);
 app.use('/salesmen', routes.report);
 app.use('/salesmen', routes.salesmen);
 app.use('/salesmen', routes.socialEvaluation);
 
-app.use('/swagger-ui', express.static(swaggerUiAssetPath))
-app.use('/swagger-ui', express.static('src/server/swagger'))
+app.use('/swagger-ui', express.static(swaggerUiAssetPath));
+app.use('/swagger-ui', express.static('src/server/swagger'));
 
 app.listen(PORT, () =>
     console.log(`Example app listening on port ${PORT}!`),
