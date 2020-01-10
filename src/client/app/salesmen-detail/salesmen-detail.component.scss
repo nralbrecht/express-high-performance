@@ -35,14 +35,30 @@ mat-panel-title {
 
 
 // Employee data
+img {
+  max-height: 150px;
+  max-width: 150px;
+  height: auto;
+  width: auto;
+  border-radius: 18px;
+}
+
 .employee-data {
-    display: flex;
     justify-content: space-between;
     margin: 16px;
     padding: 0px;
 }
 .employee-data li {
     display: block;
+    text-align: left;
+}
+
+mat-card-content {
+  text-align: center;
+}
+
+mat-card-content table {
+  display: inline-block;
 }
 
 

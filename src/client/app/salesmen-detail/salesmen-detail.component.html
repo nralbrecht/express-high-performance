@@ -7,11 +7,22 @@
       <mat-card-title>Performance record</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <ul class="employee-data">
-        <li><b>ID</b> {{ salesman.sid }}</li>
-        <li><b>Name</b> {{ salesman.firstName }} {{ salesman.lastName }}</li>
-        <li><b>Job title</b> {{ salesman.jobTitle }}</li>
-      </ul>
+      <table>
+        <tr>
+          <td>
+            <img src='data:image/jpeg;base64,{{ salesman.photo }}' />
+          </td>
+          <td>
+            <ul class="employee-data">
+              <li><b>ID</b> {{ salesman.sid }}</li>
+              <li><b>Name</b> {{ salesman.firstName }} {{ salesman.lastName }}</li>
+              <li><b>Job title</b> {{ salesman.jobTitle }}</li>
+            </ul>
+          </td>
+        </tr>
+      </table>
+
+
     </mat-card-content>
   </mat-card>
 
@@ -34,14 +45,8 @@
               </mat-form-field>
             </li>
             <li>
-              <b>State</b>
-              <mat-form-field>
-                <mat-select [(ngModel)]="report.state" name="state">
-                  <mat-option *ngFor="let state of displayedStates" [value]="state">
-                    {{state}}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+              <b>Released</b>
+              <mat-slide-toggle [(ngModel)]="released" [checked]="released" (change)="toggleReportRelease()"></mat-slide-toggle>
             </li>
             <li>
               <button mat-flat-button color="primary" class="highlight">
@@ -56,6 +61,7 @@
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
+              <mat-icon>shopping_cart</mat-icon>
               Orders evaluation
             </mat-panel-title>
           </mat-expansion-panel-header>
@@ -66,6 +72,7 @@
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
+              <mat-icon>group</mat-icon>
               Social performance evaluation
             </mat-panel-title>
           </mat-expansion-panel-header>
@@ -77,6 +84,7 @@
         <mat-expansion-panel>
           <mat-expansion-panel-header>
             <mat-panel-title>
+              <mat-icon>speaker_notes</mat-icon>
               Remarks
             </mat-panel-title>
           </mat-expansion-panel-header>

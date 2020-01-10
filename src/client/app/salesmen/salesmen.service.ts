@@ -5,6 +5,7 @@ export interface Salesman {
   firstName: string;
   lastName: string;
   jobTitle: string;
+  photo: string;
 }
 
 @Injectable({
@@ -28,7 +29,8 @@ export class SalesmenService {
         sid: salesman.sid,
         firstName: salesman.firstName,
         lastName: salesman.lastName,
-        jobTitle: salesman.jobTitle
+        jobTitle: salesman.jobTitle,
+        photo: salesman.photoBase64
       });
     });
   }
@@ -42,7 +44,8 @@ export class SalesmenService {
       sid: salesman.sid,
       firstName: salesman.firstName,
       lastName: salesman.lastName,
-      jobTitle: salesman.jobTitle
+      jobTitle: salesman.jobTitle,
+      photo: salesman.photoBase64
     };
   }
 }

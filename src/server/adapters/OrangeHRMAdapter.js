@@ -80,7 +80,7 @@ function getSalesmenById(sid) {
             xhr.setRequestHeader('Authorization', 'Bearer ' + token.access_token);
             xhr.send();
 
-            xhr.onload = function () {
+            xhr.onload = async function () {
                 const employeesJSON = JSON.parse(xhr.responseText);
 
                 if (xhr.status === 200) {
@@ -88,7 +88,8 @@ function getSalesmenById(sid) {
                     const employeesArray = jsonToArray(employeesJSON);
                     const salesMen = employeesArray[0][1]
                         .filter((user) => {
-                            return user.unit === 'Sales' && user.code === sid.toString()} )
+                            return user.unit === 'Sales' && user.code === sid.toString()
+                        })
                         .map((user) => {
                             return {
                                 "sid": user.code,
@@ -101,6 +102,8 @@ function getSalesmenById(sid) {
                                 "fullName": user.fullName
                             }
                         });
+
+                    salesMen[0]["photoBase64"] = await getPhotoById(sid);
                     resolve(salesMen[0]);
                 } else {
                     reject({
@@ -119,8 +122,7 @@ async function updateBonusGehalt(sid, newBonusGehalt) {
         "value": newBonusGehalt
     };
 
-    const employee = await getSalesmenById(sid);
-    const employeeId = employee.employeeId;
+    const employeeId = await getOrangeEmployeeIdBySid(sid);
     const token = await createToken();
 
     return new Promise(function (resolve, reject) {
@@ -143,6 +145,68 @@ async function updateBonusGehalt(sid, newBonusGehalt) {
                 });
             }
         };
+    });
+}
+
+async function getPhotoById(sid) {
+    const employeeId = await getOrangeEmployeeIdBySid(sid);
+    const token = await createToken();
+
+    return new Promise(function (resolve, reject) {
+        const url = `https://sepp-hrm.inf.h-brs.de/symfony/web/index.php/api/v1/employee/${employeeId}/photo`;
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', url, true);
+        xhr.setRequestHeader('Authorization', 'Bearer ' + token.access_token);
+        xhr.send();
+
+        xhr.onload = function () {
+            const res = JSON.parse(xhr.responseText);
+            const photo = res.data.base64;
+            if (xhr.status === 200) {
+                resolve(photo);
+            } else {
+                reject({
+                    status: this.status,
+                    statusText: xhr.statusText
+                });
+            }
+        }
+    })
+}
+
+async function getOrangeEmployeeIdBySid(sid) {
+    return createToken().then(token => {
+        return new Promise(function (resolve, reject) {
+            const url = "https://sepp-hrm.inf.h-brs.de/symfony/web/index.php/api/v1/employee/search";
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', url, true);
+            xhr.setRequestHeader('Authorization', 'Bearer ' + token.access_token);
+            xhr.send();
+
+            xhr.onload = function () {
+                const employeesJSON = JSON.parse(xhr.responseText);
+
+                if (xhr.status === 200) {
+                    // transform json into array for filtering
+                    const employeesArray = jsonToArray(employeesJSON);
+                    const salesMen = employeesArray[0][1]
+                        .filter((user) => {
+                            return user.unit === 'Sales' && user.code === sid.toString()
+                        })
+                        .map((user) => {
+                            return {
+                                "employeeId": user.employeeId,
+                            }
+                        });
+                    resolve(salesMen[0].employeeId);
+                } else {
+                    reject({
+                        status: this.status,
+                        statusText: xhr.statusText
+                    });
+                }
+            };
+        });
     });
 }
 
