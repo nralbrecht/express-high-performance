@@ -1,11 +1,7 @@
 import fetch from "node-fetch"
 import { Base64 } from 'js-base64';
 import { calculateOrderBonus } from '../controller/BonusCalculator';
-
-const CREDENTIALS = {
-    "username": "guest",
-    "password": "guest"
-}
+import config from "../../../config";
 
 async function getJsonAuthorised(url) {
     const response = await fetch(url, {
@@ -13,7 +9,7 @@ async function getJsonAuthorised(url) {
         "mode": "cors",
         "credentials": "include",
         "headers": {
-            "Authorization": "Basic " + Base64.encode(CREDENTIALS.username + ":" + CREDENTIALS.password),
+            "Authorization": "Basic " + Base64.encode(config.OPENCRX_CREDENTIALS.username + ":" + config.OPENCRX_CREDENTIALS.password),
             "Accept": "application/json"
         },
         "redirect": "follow"
@@ -23,7 +19,7 @@ async function getJsonAuthorised(url) {
 }
 
 async function getSalesmenIdentityById(sid) {
-    const accountSearchUrl = "https://sepp-crm.inf.h-brs.de/opencrx-rest-CRX/org.opencrx.kernel.account1/provider/CRX/segment/Standard/account?queryType=org:opencrx:kernel:account1:Contact&query=thereExistsGovernmentId().equalTo(\"" + sid + "\")";
+    const accountSearchUrl = config.OPENCRX_BASE_PATH + "/org.opencrx.kernel.account1/provider/CRX/segment/Standard/account?queryType=org:opencrx:kernel:account1:Contact&query=thereExistsGovernmentId().equalTo(\"" + sid + "\")";
 
     const accountResponse = await getJsonAuthorised(accountSearchUrl);
 
@@ -39,7 +35,7 @@ async function getOrdersBySalesmenAndYear(sid, year) {
     let resultObject = [];
 
     const salesmanIdentity = await getSalesmenIdentityById(sid);
-    const salesOrdersUrl = "https://sepp-crm.inf.h-brs.de/opencrx-rest-CRX/org.opencrx.kernel.contract1/provider/CRX/segment/Standard/salesOrder?query=thereExistsSalesRep().equalTo(\"" + salesmanIdentity + "\")"
+    const salesOrdersUrl = config.OPENCRX_BASE_PATH + "/org.opencrx.kernel.contract1/provider/CRX/segment/Standard/salesOrder?query=thereExistsSalesRep().equalTo(\"" + salesmanIdentity + "\")"
 
     const salesOrdersResponse = await getJsonAuthorised(salesOrdersUrl);
 

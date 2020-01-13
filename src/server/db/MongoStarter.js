@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
-
-const MONGO_CONNECTION_STRING = "mongodb://localhost:27017/supermongo";
+import config from "../../../config"
 
 function start() {
 
@@ -17,7 +16,7 @@ function start() {
     const connectWithRetry = () => {
         console.log('Connecting to MongoDB');
 
-        mongoose.connect(MONGO_CONNECTION_STRING, options).then(() => {
+        mongoose.connect(config.MONGO_CONNECTION_STRING, options).then(() => {
             console.log('MongoDB is connected');
         }).catch(err => {
             console.log('MongoDB connection unsuccessful:', err.message);

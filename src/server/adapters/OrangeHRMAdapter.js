@@ -1,15 +1,16 @@
 import { XMLHttpRequest } from "xmlhttprequest";
 import { toXWwwFormUrlencoded, jsonToArray} from "../util/Transformer";
+import config from '../../../config'
 
 function createToken() {
     const tokenData = {
-        "client_id": 'tom',
-        "client_secret": 'tom123',
+        "client_id": config.ORANGEHRM_CREDENTIALS.client_id,
+        "client_secret": config.ORANGEHRM_CREDENTIALS.client_secret,
         "grant_type": 'client_credentials'
     };
 
     return new Promise(function (resolve, reject) {
-        const url = "https://sepp-hrm.inf.h-brs.de/symfony/web/index.php/oauth/issueToken";
+        const url = config.ORANGEHRM_BASE_PATH + "/oauth/issueToken";
         const xhr = new XMLHttpRequest();
         xhr.open("POST", url, true);
         xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded; charset=utf-8');
@@ -31,7 +32,7 @@ function createToken() {
 function getAllSalesmen() {
     return createToken().then(token => {
         return new Promise(function (resolve, reject) {
-            const url = "https://sepp-hrm.inf.h-brs.de/symfony/web/index.php/api/v1/employee/search";
+            const url = config.ORANGEHRM_BASE_PATH + "/api/v1/employee/search";
             const xhr = new XMLHttpRequest();
             xhr.open('GET', url, true);
             xhr.setRequestHeader('Authorization', 'Bearer ' + token.access_token);
@@ -74,7 +75,7 @@ function getAllSalesmen() {
 function getSalesmenById(sid) {
     return createToken().then(token => {
         return new Promise(function (resolve, reject) {
-            const url = "https://sepp-hrm.inf.h-brs.de/symfony/web/index.php/api/v1/employee/search";
+            const url = config.ORANGEHRM_BASE_PATH + "/api/v1/employee/search";
             const xhr = new XMLHttpRequest();
             xhr.open('GET', url, true);
             xhr.setRequestHeader('Authorization', 'Bearer ' + token.access_token);
@@ -126,7 +127,7 @@ async function updateBonusGehalt(sid, newBonusGehalt) {
     const token = await createToken();
 
     return new Promise(function (resolve, reject) {
-        const url = `https://sepp-hrm.inf.h-brs.de/symfony/web/index.php/api/v1/employee/${employeeId}/custom-field`;
+        const url = config.ORANGEHRM_BASE_PATH + `/api/v1/employee/${employeeId}/custom-field`;
         const xhr = new XMLHttpRequest();
         xhr.open('PUT', url, true);
         xhr.setRequestHeader('Authorization', 'Bearer ' + token.access_token);
@@ -153,7 +154,7 @@ async function getPhotoById(sid) {
     const token = await createToken();
 
     return new Promise(function (resolve, reject) {
-        const url = `https://sepp-hrm.inf.h-brs.de/symfony/web/index.php/api/v1/employee/${employeeId}/photo`;
+        const url = config.ORANGEHRM_BASE_PATH + `/api/v1/employee/${employeeId}/photo`;
         const xhr = new XMLHttpRequest();
         xhr.open('GET', url, true);
         xhr.setRequestHeader('Authorization', 'Bearer ' + token.access_token);
@@ -177,7 +178,7 @@ async function getPhotoById(sid) {
 async function getOrangeEmployeeIdBySid(sid) {
     return createToken().then(token => {
         return new Promise(function (resolve, reject) {
-            const url = "https://sepp-hrm.inf.h-brs.de/symfony/web/index.php/api/v1/employee/search";
+            const url = config.ORANGEHRM_BASE_PATH + "/api/v1/employee/search";
             const xhr = new XMLHttpRequest();
             xhr.open('GET', url, true);
             xhr.setRequestHeader('Authorization', 'Bearer ' + token.access_token);
