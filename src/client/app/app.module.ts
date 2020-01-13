@@ -22,12 +22,14 @@ import { SalesmenListComponent } from './salesmen-list/salesmen-list.component';
 import { SalesmenDetailComponent } from './salesmen-detail/salesmen-detail.component';
 import { OrderEvaluationComponent } from './order-evaluation/order-evaluation.component';
 import { PerformanceEvaluationComponent } from './performance-evaluation/performance-evaluation.component';
-import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { BasicDialogComponent } from './basic-dialog/basic-dialog.component';
-import {MatDialogModule} from "@angular/material/dialog";
+import { MatDialogModule } from "@angular/material/dialog";
+import { LoginComponent } from './login/login.component';
+import { MatMenuModule } from "@angular/material/menu";
 
 @NgModule({
-  declarations: [AppComponent, SalesmenListComponent, SalesmenDetailComponent, OrderEvaluationComponent, PerformanceEvaluationComponent, BasicDialogComponent],
+  declarations: [AppComponent, SalesmenListComponent, SalesmenDetailComponent, OrderEvaluationComponent, PerformanceEvaluationComponent, BasicDialogComponent, LoginComponent],
   entryComponents: [BasicDialogComponent],
   imports: [
     BrowserModule,
@@ -46,7 +48,8 @@ import {MatDialogModule} from "@angular/material/dialog";
     MatButtonModule,
     MatProgressSpinnerModule,
     MatSlideToggleModule,
-    MatDialogModule
+    MatDialogModule,
+    MatMenuModule
   ],
   providers: [],
   bootstrap: [AppComponent]

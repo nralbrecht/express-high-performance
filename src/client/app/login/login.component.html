@@ -1,0 +1,28 @@
+<mat-card>
+  <mat-card-title>Login</mat-card-title>
+
+  <mat-card-content>
+    <form name="form" class="login-form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+      <div class="form-group" [ngClass]="{ 'has-error': f.submitted && !username.valid }">
+          <mat-form-field class="input-full-width">
+            <input matInput type="text" placeholder="Username" name="username" (keyup.enter)="f.form.valid && login()" [(ngModel)]="model.username" #username="ngModel" required>
+            <mat-error *ngIf="!username.valid">Username is required</mat-error>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field class="input-full-width">
+          <input matInput type="password" placeholder="Password" name="password" (keyup.enter)="f.form.valid && login()" [(ngModel)]="model.password" #password="ngModel" required>
+          <mat-error *ngIf="!username.valid">Password is required</mat-error>
+      </mat-form-field>
+    </form>
+  </mat-card-content>
+
+  <mat-card-actions>
+    <button mat-raised-button (click)="f.form.valid && login()" color="primary" id="submit-button">Login</button>
+    <button mat-raised-button [routerLink]="['/register']" disabled>Register</button>
+    <div class="spinner-container" *ngIf="loading">
+      <mat-spinner [diameter]="25" [color]="warn"></mat-spinner>
+    </div>
+  </mat-card-actions>
+</mat-card>
+

@@ -1,0 +1,26 @@
+.login-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.input-full-width {
+  width: 100%;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group > * {
+  width: 100%;
+}
+
+.spinner-container {
+  margin: 5px 10px 0 10px;
+}
+
+mat-card-actions {
+  display: flex;
+}

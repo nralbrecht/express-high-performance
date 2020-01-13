@@ -6,6 +6,24 @@
       {{ title }}
     </a>
   </h1>
+
+  <span class="expander"></span>
+
+  <div *ngIf="authenticationService.isAuthenticated(); else isNotAuthenticated">
+    <mat-menu #appMenu="matMenu">
+      <button mat-menu-item [routerLink]="['login']">Logout</button>
+    </mat-menu>
+
+    <button mat-raised-button [matMenuTriggerFor]="appMenu">
+      <mat-icon>account_circle</mat-icon>
+      {{ authenticationService.getCurrentUsername() }}
+    </button>
+  </div>
+  <ng-template #isNotAuthenticated>
+    <button mat-raised-button [routerLink]="['login']">Login</button>
+    &nbsp;
+    <button mat-raised-button [routerLink]="['register']" disabled>Register</button>
+  </ng-template>
 </mat-toolbar>
 
 <div class="content">
