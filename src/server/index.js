@@ -36,6 +36,8 @@ app.use(function(req, res, next) {
     next();
 });
 
+app.use(routes.auth);
+
 app.use('/salesmen', routes.order);
 app.use('/salesmen', routes.report);
 app.use('/salesmen', routes.salesmen);
