@@ -23,14 +23,18 @@ export class AuthenticationService {
       "redirect": "follow"
     });
 
-    let user = await userResponse.json();
+    if (userResponse.ok) {
+      let user = await userResponse.json();
 
-    if (user && user.token) {
-      localStorage.setItem('currentUser', JSON.stringify(user));
-      this.currentUser = user;
+      if (user && user.token) {
+        localStorage.setItem('currentUser', JSON.stringify(user));
+        this.currentUser = user;
+
+        return true;
+      }
     }
 
-    return user;
+    return false;
   }
 
   logout() {
@@ -39,15 +43,15 @@ export class AuthenticationService {
   }
 
   isAuthenticated() {
-    return !!this.currentUser;
+    return !!this.currentUser && (this.currentUser.exp - Math.floor(Date.now() / 1000)) > 0;
   }
 
-  getCurrentUsername() {
-    if (this.isAuthenticated() && this.currentUser.username) {
-      return this.currentUser.username;
+  getCurrentUser() {
+    if (this.isAuthenticated()) {
+      return this.currentUser;
     }
     else {
-      throw "not authenticated";
+      return null;
     }
   }
 }

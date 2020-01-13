@@ -16,7 +16,7 @@
 
     <button mat-raised-button [matMenuTriggerFor]="appMenu">
       <mat-icon>account_circle</mat-icon>
-      {{ authenticationService.getCurrentUsername() }}
+      {{ authenticationService.getCurrentUser().username }}
     </button>
   </div>
   <ng-template #isNotAuthenticated>

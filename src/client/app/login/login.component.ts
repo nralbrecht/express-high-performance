@@ -28,14 +28,20 @@ export class LoginComponent implements OnInit {
   async login() {
     this.loading = true;
 
-    const user = await this.authenticationService.login(this.model.username, this.model.password);
+    try {
+      const successful = await this.authenticationService.login(this.model.username, this.model.password);
 
-    if (user) {
-      this.router.navigate([this.returnUrl]);
-    }
-    else {
+      if (successful) {
+        this.router.navigate([this.returnUrl]);
+      }
+      else {
+        this.loading = false;
+        this.model = {};
+      }
+    } catch (error) {
       this.loading = false;
       this.model = {};
     }
+
   }
 }
