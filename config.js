@@ -8,7 +8,7 @@ export default {
     "JWT_ALGORITHM": "HS256",
     "JWT_EXPIRES_IN_SEC": 3600,
     "JWT_SECRET": "Not very secure but it should do the Trick =)",
-    "BCRYPT_ROUNDS": 10,
+    "SALT_LENGTH": 64,
 
     "OPENCRX_BASE_PATH": "https://sepp-crm.inf.h-brs.de/opencrx-rest-CRX",
     "OPENCRX_CREDENTIALS": {

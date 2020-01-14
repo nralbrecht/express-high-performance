@@ -1,13 +1,25 @@
 import config from "../../../config";
-import bcrypt from "bcrypt";
+import crypto from "crypto";
 import jwt from "jsonwebtoken";
 
 function generatePaswordHash(password) {
-    return bcrypt.hash(password, config.BCRYPT_ROUNDS);
+    const salt = crypto.randomBytes(config.SALT_LENGTH)
+        .toString("hex")
+        .slice(0, config.SALT_LENGTH);
+
+    let hash = crypto.createHmac("sha512", salt);
+    hash.update(salt + "." + password);
+
+    return salt + "." + hash.digest("hex");
 }
 
 function verifyPasswordHash(password, passwordHash) {
-    return bcrypt.compare(password, passwordHash);
+    const splitHash = passwordHash.split(".");
+
+    let hash = crypto.createHmac("sha512", splitHash[0]);
+    hash.update(splitHash[0] + "." + password);
+
+    return hash.digest('hex') === splitHash[1];
 }
 
 function verifyToken(token) {
