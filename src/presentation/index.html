@@ -1,0 +1,268 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Slides - VacFormance</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/white.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+
+                <!-- Titelfolie -->
+				<section data-background="#f1edff">
+                    <h5>Projekt High Performance</h5>
+                    <h1>VacFormance</h1>
+                    <img class="plain" height="300" data-src="https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/pair_programming_njlp.svg" alt="illustration">
+                    <p>
+                        <small>von Nils Albrecht & Jennifer Anglewitz</small>
+                    </p>
+                </section>
+
+                <!-- Agenda -->
+				<section data-background="#f1edff">
+                    <h2>Agenda</h2>
+                    <ul>
+                        <li>Der Prozess vor VacFormance</li>
+                        <li>Die Integration</li>
+                        <li>Die neue Architektur</li>
+                        <li>Die Demo</li>
+                        <li>Das User Interface</li>
+                        <li>Der Code</li>
+                        <li>Die Tests</li>
+                        <li>Die erreichten Anforderungen</li>
+                        <li>Unsere Lessons Learned</li>
+                        TODO: Swagger
+                    </ul>
+                </section>
+
+                <!-- Der Prozess vor VacFormance -->
+                <section>
+                    <section data-background="#f1edff">
+                        <h2>Der Prozess vor VacFormance</h2>
+                        <img class="plain" height="300" data-src="https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/process_e90d.svg" alt="illustration">
+                    </section>
+                    <section>
+                        <h2>Performance Management</h2>
+                        <p>Ziel: Bonus der Vertreter der SmartHoover Ltd. berechnen</p>
+                        <p>Der Bonus wird unter Berücksichtigung der Verkaufszahlen sowie dem persönlichen Verhalten eines Vertreters ermittelt</p>
+                    </section>
+                    <section>
+                        <h2>Akteure</h2>
+                        <p><b>Personaler:</b> Zusammentragen der Daten aus verschiedenen Systemen sowie Berechnung der Boni</p>
+                        <p><b>IT-Admin:</b> Datenabfragen und -eintragungen in die Performance-DB</p>
+                        <p><b>CEO:</b> Berechnung, Kommentierung und Freigabe der Boni</p>
+                        <p><b>Vertreter:</b> Empfang einer E-Mail mit einem Kommentar der CEOs zum Bonus</p>
+                    </section>
+                    <section>
+                        <h2>Der Prozess</h2>
+                        <img class="plain" height="500" data-src="assets\old-process-package-diagram.png" alt="diagram">
+                    </section>
+                    <section>
+                        <h2>Nachteile des Prozesses</h2>
+                        <p>Alle Tätigkeiten werden manuell durchgeführt</p>
+                        <p>Die relevanten Daten werden aus mehreren Systemen zusammengetragen</p>
+                        <p>Der Berechnungsalgorithmus ist nicht transparent</p>
+                        <p>Es besteht eine hohe Fehleranfälligkeit</p>
+                        <p>Das Bonus-Dokument ist analog (Ausdruck)</p>
+                    </section>
+                </section>
+
+                <!-- Die Integration -->
+                <section>
+                    <section data-background="#f1edff">
+                        <h2>Die Integration</h2>
+                        <img class="plain" height="300" data-src="https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/Memory_storage_reh0.svg" alt="illustration">
+                    </section>
+                    <section>
+                        <h2>Bestehende Systeme</h2>
+                        <p><b>OrangeHRM:</b> Personaldaten und Bonus</p>
+                        <p><b>OpenCRX:</b> Verkaufszahlen</p>
+                        <p><b>MongoDB:</b> Daten zum sozialen Verhalten</p>
+                        <p><b>Excel:</b> Bonus-Kalkulation</p>
+                    </section>
+                    <section>
+                        <h2>Business Objekte</h2>
+                        <img class="plain" height="500" data-src="assets\business-objects.png" alt="diagram">
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## OrangeHRM - API
+
+                            Erhalte alle Mitarbeiter
+                            ```
+                            GET https://sepp-hrm.inf.h-brs.de/symfony/web/index.php/api/v1/employee/search
+                            ```
+                            Erhalte das Mitarbeiterfoto per ID
+                            ```
+                            GET https://sepp-hrm.inf.h-brs.de/symfony/web/index.php/api/v1/employee/search
+                            ```
+                            Aktualisiere das Bonusgehalt eines Mitarbeiters
+                            ```
+                            PUT https://sepp-hrm.inf.h-brs.de/symfony/web/index.php/api/v1/employee/90123/custom-field
+                            ## Request header: { "fieldId": 9, "value": 890 }
+                            ```
+                        </script>
+                    </section>
+                    <section>
+                        <h2>Security Mechanismus<br>von OrangeHRM</h2>
+                        <img class="plain" height="500" data-src="assets\orangehrm-security-mechanism.png" alt="diagram">
+                    </section>
+                    <section data-markdown>
+                        <script type="text/template">
+                            ## OpenCRX - API
+
+                            Erhalte die OpenCRX-ID eines Vertreters
+                            ```
+                            GET https://sepp-crm.inf.h-brs.de/opencrx-rest-CRX/org.opencrx.kernel.account1/provider/CRX/segment/Standard/account?queryType=org:opencrx:kernel:account1:Contact&query=thereExistsGovernmentId().equalTo("90123")
+                            ```
+                            Erhalte alle Orders eines Vertreters für ein bestimmtes Jahr
+                            ```
+                            GET https://sepp-crm.inf.h-brs.de/opencrx-rest-CRX/org.opencrx.kernel.contract1/provider/CRX/segment/Standard/salesOrder?query=thereExistsSalesRep().equalTo("9ENFSDRCBESBTH2MA4T2TYJFL")
+                            ```
+                        </script>
+                    </section>
+                    <section>
+                        <h2>Security Mechanismus<br>von OpenCRX</h2>
+                        <img class="plain" height="300" data-src="assets\opencrx-security-mechanism.png" alt="diagram">
+                    </section>
+                </section>
+
+                <!-- Die neue Architektur -->
+                <section>
+                    <section data-background="#f1edff">
+                        <h2>Die neue Architektur</h2>
+                        <img class="plain" height="300" data-src="https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/mind_map_cwng.svg" alt="illustration">
+                    </section>
+                    <section>
+                        <h2>Context View</h2>
+                        TODO: Context View unserer aktuellen Architektur (UML Package Diagramm), sollte ähnlich wie old-process-package-diagramm aussehen
+                    </section>
+                    <section>
+                        <h2>Module View</h2>
+                        TODO: Module View unserer aktuellen Architektur einfügen, ggf. mehrere: 4 Views Model, Package Diagramm, Klassendiagramm (vgl. Aufgabe 3.4 und 4.2).
+                    </section>
+                    <section>
+                        <h2>Sequenzdiagramm</h2>
+                        TODO: Die wichtigsten Interaktionen als Sequenzdiagramme darstellen
+                    </section>
+                    <section>
+                        <h2>Distributionsdiagramm</h2>
+                        TODO: Prüfen, ob es noch aktuell ist, dann einfügen (Aufgabe 3.4)
+                    </section>
+                </section>
+
+                <!-- Die Demo  -->
+                <section>
+                    <section data-background="#f1edff">
+                        <h2>Die Demo</h2>
+                        <img class="plain" height="300" data-src="https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/wireframing_nxyi.svg" alt="illustration">
+                    </section>
+                </section>
+
+                <!-- Das User Interface  -->
+                <section>
+                    <section data-background="#f1edff">
+                        <h2>Das User Interface</h2>
+                        <img class="plain" height="300" data-src="https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/contrast_vb82.svg" alt="illustration">
+                    </section>
+                    <section>
+                        <h2>Mock-Ups im Vergleich</h2>
+                        TODO: Bilder der Mock-Ups einfügen, ggf. auch Screenshots des echten UIs
+                    </section>
+                    <section>
+                        <h2>Welche Unterschiede gibt es?</h2>
+                        TODO: Unterschiede zwischen echtem UI & Mock-Ups aufschreiben
+                    </section>
+                </section>
+
+                <!-- Der Code -->
+                <section>
+                    <section data-background="#f1edff">
+                        <h2>Der Code</h2>
+                        <img class="plain" height="300" data-src="https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/code_typing_7jnv.svg" alt="illustration">
+                    </section>
+                </section>
+
+                <!-- Die Tests -->
+                <section>
+                    <section data-background="#f1edff">
+                        <h2>Die Tests</h2>
+                        <img class="plain" height="300" data-src="https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/bug_fixing_oc7a.svg" alt="illustration">
+                    </section>
+                </section>
+
+                <!-- Die erreichten Anforderungen  -->
+                <section>
+                    <section data-background="#f1edff">
+                        <h2>Die erreichten Anforderungen</h2>
+                        <img class="plain" height="300" data-src="https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/finish_line_katerina_limpitsouni_xy20.svg" alt="illustration">
+                    </section>
+                    <section>
+                        <h2>Erreichte User Stories</h2>
+                        TODO: Erreichte User Stories eintragen
+                    </section>
+                    <section>
+                        <h2>Nicht erreichte User Stories</h2>
+                        TODO: Nicht erreichte User Stories eintragen
+                    </section>
+                </section>
+
+                <!-- Unsere Lessons Learned -->
+                <section>
+                    <section data-background="#f1edff">
+                        <h2>Unsere Lessons Learned</h2>
+                        <img class="plain" height="300" data-src="https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/exams_g4ow.svg" alt="illustration">
+                    </section>
+                    <section>
+                        <h2>Unsere Lessons Learned</h2>
+                        TODO: Hier etwas hinschreiben, außerdem auf die Einschränkungen des Prototyps eingehen und mögliche zukünftige Arbeiten vorschlagen
+                    </section>
+                </section>
+
+                <!-- Letzte Folie -->
+                <section>
+                    <h5>An das Publikum</h5>
+                    <h3>Haben Sie noch Fragen?</h3>
+                    <img class="plain" height="300" data-src="https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/pair_programming_njlp.svg" alt="illustration">
+                    <p>
+                        <small>Wir danken für Ihre Aufmerksamkeit!</small>
+                    </p>
+                </section>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>
