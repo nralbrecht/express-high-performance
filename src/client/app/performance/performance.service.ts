@@ -20,6 +20,7 @@ export interface SocialCriterion {
   description: string;
   goalId: number;
   targetValue: number;
+  bonus: number;
 }
 
 @Injectable({
@@ -88,6 +89,26 @@ export class PerformanceService {
       social: social,
       remarks: remarks
     }
+  }
+
+  async updatePerformanceRecordBySidAndYear(sid: number, year: number, newGoals: SocialCriterion[]) {
+    const urlSocial = "http://localhost:8080/salesmen/" + sid + "/report/" + year + "/social";
+    const response = await fetch(urlSocial, {
+      method: "PUT",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(newGoals.map(criteria => {
+        return {
+          "actualValue": criteria.actualValue,
+          "goalId": criteria.goalId,
+          "targetValue": criteria.targetValue
+        }
+      }))
+    });
+
+    return response.ok;
   }
 
   async updateReportBySidAndYear(sid: number, year: number, newRemark: string, newState: string) {

@@ -22,7 +22,6 @@ router.get('/:sid/report/:year/social', async (req, res) => {
     }
 });
 
-// works
 router.post('/:sid/report/:year/social', async (req, res) => {
     try {
         const records = await socialEvaluation.create(req.params.sid, req.params.year, req.body);
@@ -39,7 +38,6 @@ router.post('/:sid/report/:year/social', async (req, res) => {
     }
 });
 
-// works
 router.put('/:sid/report/:year/social', async (req, res) => {
     try {
         const message = await socialEvaluation.update(req.params.sid, req.params.year, req.body);

@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Salesman, SalesmenService } from "../salesmen/salesmen.service";
-import {
-  PerformanceService,
-  PerformanceRecord
-} from "../performance/performance.service";
-import {BasicDialogComponent} from "../basic-dialog/basic-dialog.component";
-import {MatDialog} from "@angular/material/dialog";
+import { PerformanceService, PerformanceRecord } from "../performance/performance.service";
+import { BasicDialogComponent } from "../basic-dialog/basic-dialog.component";
+import { MatDialog } from "@angular/material/dialog";
+import { calculateSocialBonus, calculateSocialTotalBonus } from "../../../server/controller/BonusCalculator"
 
 @Component({
   selector: 'app-salesmen-detail',
@@ -83,4 +81,19 @@ export class SalesmenDetailComponent implements OnInit {
     });
   }
 
+  updateSocial() {
+    for (const i in this.report.social.criteria) {
+      this.report.social.criteria[i].bonus = calculateSocialBonus(this.report.social.criteria[i]);
+    }
+
+    this.report.social.totalBonus = calculateSocialTotalBonus(this.report.social.criteria);
+  }
+
+  saveSocial() {
+    this.performanceService.updatePerformanceRecordBySidAndYear(this.sid, this.selectedYear, this.report.social.criteria);
+  }
+
+  cancelSocial() {
+    this.onYearChosen();
+  }
 }

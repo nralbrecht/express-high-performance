@@ -75,7 +75,7 @@
             </mat-panel-title>
           </mat-expansion-panel-header>
 
-          <app-performance-evaluation [social]="report.social.criteria" [totalBonus]="report.social.totalBonus"></app-performance-evaluation>
+          <app-performance-evaluation [social]="report.social.criteria" [totalBonus]="report.social.totalBonus" (update)="updateSocial()" (save)="saveSocial()" (cancel)="cancelSocial()"></app-performance-evaluation>
 
         </mat-expansion-panel>
 
