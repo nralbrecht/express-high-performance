@@ -26,53 +26,50 @@ const socialEvaluationSchema = new mongoose.Schema({
     }]
 });
 
-// does not work
 socialEvaluationSchema.index({ 'sid': 1, 'year': 1 }, { 'unique': true });
 
 const SocialEvaluation = mongoose.model('SocialEvaluation', socialEvaluationSchema);
 
-function init() {
-    SocialEvaluation.init().then(() => {
+async function init() {
+    await SocialEvaluation.init();
+    await SocialEvaluation.collection.deleteMany({});
 
-        SocialEvaluation.collection.deleteMany({});
-
-        create(
-            90123,
-            2019,
-            [
-                {"goalId":1,"targetValue":4,"actualValue":3},
-                {"goalId":2,"targetValue":4,"actualValue":4},
-                {"goalId":3,"targetValue":4,"actualValue":2},
-                {"goalId":4,"targetValue":4,"actualValue":3},
-                {"goalId":5,"targetValue":4,"actualValue":4},
-                {"goalId":6,"targetValue":4,"actualValue":4}
-            ]
-        );
-        create(
-            90123,
-            2018,
-            [
-                {"goalId":1,"targetValue":4,"actualValue":4},
-                {"goalId":2,"targetValue":4,"actualValue":4},
-                {"goalId":3,"targetValue":4,"actualValue":2},
-                {"goalId":4,"targetValue":4,"actualValue":3},
-                {"goalId":5,"targetValue":4,"actualValue":2},
-                {"goalId":6,"targetValue":4,"actualValue":3}
-            ]
-        );
-        create(
-            91337,
-            2019,
-            [
-                {"goalId":1,"targetValue":4,"actualValue":3},
-                {"goalId":2,"targetValue":4,"actualValue":4},
-                {"goalId":3,"targetValue":4,"actualValue":2},
-                {"goalId":4,"targetValue":4,"actualValue":4},
-                {"goalId":5,"targetValue":4,"actualValue":4},
-                {"goalId":6,"targetValue":4,"actualValue":2}
-            ]
-        );
-    });
+    create(
+        90123,
+        2019,
+        [
+            {"goalId":1,"targetValue":4,"actualValue":3},
+            {"goalId":2,"targetValue":4,"actualValue":4},
+            {"goalId":3,"targetValue":4,"actualValue":2},
+            {"goalId":4,"targetValue":4,"actualValue":3},
+            {"goalId":5,"targetValue":4,"actualValue":4},
+            {"goalId":6,"targetValue":4,"actualValue":4}
+        ]
+    );
+    create(
+        90123,
+        2018,
+        [
+            {"goalId":1,"targetValue":4,"actualValue":4},
+            {"goalId":2,"targetValue":4,"actualValue":4},
+            {"goalId":3,"targetValue":4,"actualValue":2},
+            {"goalId":4,"targetValue":4,"actualValue":3},
+            {"goalId":5,"targetValue":4,"actualValue":2},
+            {"goalId":6,"targetValue":4,"actualValue":3}
+        ]
+    );
+    create(
+        91337,
+        2019,
+        [
+            {"goalId":1,"targetValue":4,"actualValue":3},
+            {"goalId":2,"targetValue":4,"actualValue":4},
+            {"goalId":3,"targetValue":4,"actualValue":2},
+            {"goalId":4,"targetValue":4,"actualValue":4},
+            {"goalId":5,"targetValue":4,"actualValue":4},
+            {"goalId":6,"targetValue":4,"actualValue":2}
+        ]
+    );
 }
 
 function addBonusToSocialEvaluation(evaluation) {

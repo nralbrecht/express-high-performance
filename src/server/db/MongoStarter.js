@@ -4,7 +4,9 @@ import config from "../../../config"
 function start() {
 
     const options = {
-        autoIndex: false, // Don't build indexes
+        useCreateIndex: true, // Don't use the deprecated collection.ensureIndex
+        useFindAndModify: false,
+        autoIndex: true, // build indexes
         poolSize: 10, // Maintain up to 10 socket connections
         serverSelectionTimeoutMS: 10000,
         // If not connected, return errors immediately rather than waiting for reconnect

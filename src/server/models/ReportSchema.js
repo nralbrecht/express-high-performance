@@ -23,30 +23,28 @@ reportSchema.index({ 'sid': 1, 'year': 1 }, { 'unique': true });
 
 const Report = mongoose.model('Report', reportSchema);
 
-function init() {
-    Report.init().then(() => {
+async function init() {
+    await Report.init();
+    await Report.collection.deleteMany({});
 
-        Report.collection.deleteMany({});
-
-        Report.create(new Report({
-            "sid": 90123,
-            "year": 2019,
-            "state": "open",
-            "remark": "bla bli blub"
-        }));
-        Report.create(new Report({
-            "sid": 90123,
-            "year": 2018,
-            "state": "released",
-            "remark": "bla bli blub"
-        }));
-        Report.create(new Report({
-            "sid": 91337,
-            "year": 2019,
-            "state": "open",
-            "remark": "bla bli blub"
-        }))
-    });
+    Report.create(new Report({
+        "sid": 90123,
+        "year": 2019,
+        "state": "open",
+        "remark": "bla bli blub"
+    }));
+    Report.create(new Report({
+        "sid": 90123,
+        "year": 2018,
+        "state": "released",
+        "remark": "bla bli blub"
+    }));
+    Report.create(new Report({
+        "sid": 91337,
+        "year": 2019,
+        "state": "open",
+        "remark": "bla bli blub"
+    }));
 }
 
 function readAll() {

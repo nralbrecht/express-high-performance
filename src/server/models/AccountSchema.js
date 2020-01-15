@@ -26,44 +26,43 @@ const accountSchema = new mongoose.Schema({
 
 const Account = mongoose.model('Account', accountSchema);
 
-function init() {
-    Account.init().then(async () => {
-        Account.collection.deleteMany({});
+async function init() {
+    await Account.init();
+    await Account.collection.deleteMany({});
 
-        Account.create(new Account({
-            "idHR": 7,
-            "idCRX": 90123,
-            "username": "john",
-            "passwordHash": await crypto.generatePaswordHash("password"),
-            "roles": ["sales"]
-        }));
-        Account.create(new Account({
-            "idHR": 30,
-            "idCRX": 91337,
-            "username": "mary",
-            "passwordHash": await crypto.generatePaswordHash("password"),
-            "roles": ["sales"]
-        }));
-        Account.create(new Account({
-            "idHR": 10,
-            "username": "chantal",
-            "passwordHash": await crypto.generatePaswordHash("password"),
-            "roles": ["hr"]
-        }));
-        Account.create(new Account({
-            "idHR": 8,
-            "idCRX": 90001,
-            "username": "moore",
-            "passwordHash": await crypto.generatePaswordHash("password"),
-            "roles": ["ceo"]
-        }));
-        Account.create(new Account({
-            "idHR": 11,
-            "username": "tom",
-            "passwordHash": await crypto.generatePaswordHash("password"),
-            "roles": ["admin"]
-        }));
-    });
+    Account.create(new Account({
+        "idHR": 7,
+        "idCRX": 90123,
+        "username": "john",
+        "passwordHash": crypto.generatePaswordHash("password"),
+        "roles": ["sales"]
+    }));
+    Account.create(new Account({
+        "idHR": 30,
+        "idCRX": 91337,
+        "username": "mary",
+        "passwordHash": crypto.generatePaswordHash("password"),
+        "roles": ["sales"]
+    }));
+    Account.create(new Account({
+        "idHR": 10,
+        "username": "chantal",
+        "passwordHash": crypto.generatePaswordHash("password"),
+        "roles": ["hr"]
+    }));
+    Account.create(new Account({
+        "idHR": 8,
+        "idCRX": 90001,
+        "username": "moore",
+        "passwordHash": crypto.generatePaswordHash("password"),
+        "roles": ["ceo"]
+    }));
+    Account.create(new Account({
+        "idHR": 11,
+        "username": "tom",
+        "passwordHash": crypto.generatePaswordHash("password"),
+        "roles": ["admin"]
+    }));
 }
 
 function readAll() {
