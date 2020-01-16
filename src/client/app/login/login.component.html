@@ -19,7 +19,6 @@
 
   <mat-card-actions>
     <button mat-raised-button (click)="f.form.valid && login()" color="primary" id="submit-button">Login</button>
-    <button mat-raised-button [routerLink]="['/register']" disabled>Register</button>
     <div class="spinner-container" *ngIf="loading">
       <mat-spinner [diameter]="25" [color]="warn"></mat-spinner>
     </div>
