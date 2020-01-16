@@ -1,10 +1,18 @@
 import { Injectable } from '@angular/core';
 
+export interface CurrentUser {
+  idHR: number;
+  idCRX: number;
+  username: string;
+  roles: string[];
+  exp: number;
+}
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
-  currentUser: any = null;
+  currentUser: CurrentUser = null;
 
   constructor() {
     if (localStorage.currentUser) {

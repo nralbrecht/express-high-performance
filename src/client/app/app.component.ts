@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthenticationService } from "./authentication/authentication.service";
 
 @Component({
@@ -10,5 +11,11 @@ export class AppComponent {
   title: string = 'VacFormance';
 
   constructor(
-    private authenticationService: AuthenticationService) { }
+    private authenticationService: AuthenticationService,
+    private router: Router) { }
+
+  logout() {
+    this.authenticationService.logout();
+    this.router.navigate(['/login']);
+  }
 }
