@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AuthenticationService } from '../authentication/authentication.service';
 
 export interface OrderEvaluation {
 	orders: Order[];
@@ -31,8 +32,14 @@ export interface Product {
 	providedIn: 'root'
 })
 export class OrderService {
+  constructor(private authenticationService: AuthenticationService) { }
+
 	async getOrdersBySidAndYear(sid: number, year: number) : Promise<OrderEvaluation> {
-		const response = await fetch("http://localhost:8080/salesmen/" + sid + "/report/" + year + "/orders");
+    const response = await fetch("http://localhost:8080/salesmen/" + sid + "/report/" + year + "/orders", {
+      headers: {
+        "Authorization": `Bearer ${this.authenticationService.getCurrentUser().token}`
+      }
+    });
 
 		return await response.json();
 	}

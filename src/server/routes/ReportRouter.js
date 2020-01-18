@@ -4,11 +4,20 @@ import { updateBonusGehalt } from "../adapters/OrangeHRMAdapter";
 import { getOrdersBySalesmenAndYear } from "../adapters/OpenCRXAdapter";
 import { readBySidAndYear } from "../models/SocialEvaluationSchema";
 import { calculateOrdersTotalBonus, calculateSocialTotalBonus } from "../controller/BonusCalculator";
+import crypto from "../controller/Crypto"
 
 const router = Router();
 
 router.get('/:sid/report', async (req, res) => {
     try {
+        try {
+            if (await crypto.testTokenRole(req.token, "sales") && !await crypto.testTokenIdCRX(req.token, req.params.sid)) {
+                return res.sendStatus(401);
+            }
+        } catch (error) {
+            return res.sendStatus(401);
+        }
+
         const reports = await report.readBySid(req.params.sid);
         return res.status(200).send(reports);
     }
@@ -20,6 +29,14 @@ router.get('/:sid/report', async (req, res) => {
 
 router.get('/:sid/report/:year', async (req, res) => {
     try {
+        try {
+            if (await crypto.testTokenRole(req.token, "sales") && !await crypto.testTokenIdCRX(req.token, req.params.sid)) {
+                return res.sendStatus(401);
+            }
+        } catch (error) {
+            return res.sendStatus(401);
+        }
+
         const reports = await report.readBySidAndYear(req.params.sid, req.params.year);
 
         if (!reports) {
@@ -36,6 +53,14 @@ router.get('/:sid/report/:year', async (req, res) => {
 
 router.post('/:sid/report/:year', async (req, res) => {
     try {
+        try {
+            if (!(await crypto.testTokenRole(req.token, "admin") || await crypto.testTokenRole(req.token, "hr") || await crypto.testTokenRole(req.token, "ceo"))) {
+                return res.sendStatus(401);
+            }
+        } catch (error) {
+            return res.sendStatus(401);
+        }
+
         const reports = await report.create(req.params.sid, req.params.year, req.body);
         return res.status(200).send(reports);
     }
@@ -53,6 +78,14 @@ router.post('/:sid/report/:year', async (req, res) => {
 
 router.put('/:sid/report/:year', async (req, res) => {
     try {
+        try {
+            if (!(await crypto.testTokenRole(req.token, "admin") || await crypto.testTokenRole(req.token, "hr") || await crypto.testTokenRole(req.token, "ceo"))) {
+                return res.sendStatus(401);
+            }
+        } catch (error) {
+            return res.sendStatus(401);
+        }
+
         const message = await report.update(req.params.sid, req.params.year, req.body);
 
         if (req.body.state === "released") {

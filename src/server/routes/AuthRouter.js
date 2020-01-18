@@ -13,7 +13,7 @@ router.post('/issueToken', async (req, res) => {
             const user = users[0];
 
             try {
-                const isPasswordValid = await crypto.verifyPasswordHash(req.body.password, user.passwordHash);
+                const isPasswordValid = crypto.verifyPasswordHash(req.body.password, user.passwordHash);
 
                 if(isPasswordValid) {
                     let payload = {
@@ -27,7 +27,7 @@ router.post('/issueToken', async (req, res) => {
                         payload.idCRX = user.idCRX;
                     }
 
-                    payload.token = crypto.signToken(payload);
+                    payload.token = await crypto.signToken(payload);
 
                     res.status(200).send(payload);
                 }

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { AuthenticationService } from '../authentication/authentication.service';
 
 export interface Salesman {
   sid: number;
@@ -14,6 +15,9 @@ export interface Salesman {
 export class SalesmenService {
   salesmen: Salesman[] = [];
 
+  constructor(
+    private authenticationService: AuthenticationService) { }
+
   async getSalesmen() {
     await this.loadSalesmen();
     return this.salesmen;
@@ -21,7 +25,11 @@ export class SalesmenService {
 
   private async loadSalesmen() {
     const url = "http://localhost:8080/salesmen";
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: {
+        "Authorization": `Bearer ${this.authenticationService.getCurrentUser().token}`
+      }
+    });
     const myJson = await response.json();
 
     myJson.forEach(salesman => {
@@ -37,7 +45,11 @@ export class SalesmenService {
 
   async getSalesmanBySid(sid) {
     const url = "http://localhost:8080/salesmen/" + sid;
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: {
+        "Authorization": `Bearer ${this.authenticationService.getCurrentUser().token}`
+      }
+    });
     const salesman = await response.json();
 
     return {

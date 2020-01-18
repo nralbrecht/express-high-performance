@@ -48,9 +48,33 @@ function signToken(payload) {
     });
 }
 
+async function testTokenRole(token, role) {
+    const decoded = await verifyToken(token);
+
+    if (decoded.roles.includes(role)) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
+async function testTokenIdCRX(token, idCRX) {
+    const decoded = await verifyToken(token);
+
+    if (decoded.idCRX == idCRX) {
+        return true;
+    }
+    else {
+        return false;
+    }
+}
+
 export default {
     generatePaswordHash,
     verifyPasswordHash,
     verifyToken,
-    signToken
+    signToken,
+    testTokenRole,
+    testTokenIdCRX
 }

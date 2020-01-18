@@ -8,13 +8,13 @@ import { Salesman, SalesmenService } from "../salesmen/salesmen.service";
   styleUrls: ['./salesmen-list.component.scss']
 })
 export class SalesmenListComponent implements OnInit {
-  salesmenService = new SalesmenService();
   elementData: Salesman[];
   dataSource: MatTableDataSource<Salesman>;
   displayedColumns: string[];
   isLoadingSalesmen: boolean = true;
 
-  constructor() { }
+  constructor(
+    private salesmenService: SalesmenService) { }
 
   async ngOnInit() {
     this.isLoadingSalesmen = true;

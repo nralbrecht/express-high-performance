@@ -5,6 +5,7 @@ export interface CurrentUser {
   idCRX: number;
   username: string;
   roles: string[];
+  token: string;
   exp: number;
 }
 

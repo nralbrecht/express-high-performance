@@ -6,6 +6,7 @@ import { getAbsoluteFSPath } from 'swagger-ui-dist';
 import replace from 'replace';
 import path from 'path';
 import cors from 'cors';
+import bearerToken from "express-bearer-token";
 import config from '../../config'
 
 start();
@@ -23,6 +24,7 @@ replace({
 });
 
 app.use(cors());
+app.use(bearerToken());
 
 app.use(
     bodyParser.urlencoded({
@@ -32,7 +34,7 @@ app.use(
 app.use(bodyParser.json());
 
 app.use(function(req, res, next) {
-    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} ${JSON.stringify(req.body)}`);
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.url} ${JSON.stringify(req.body)} ${req.token}`);
     next();
 });
 

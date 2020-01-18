@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { OrderService, OrderEvaluation } from "../order/order.service";
+import { AuthenticationService } from "../authentication/authentication.service";
 
 export interface PerformanceRecord {
   sid: number;
@@ -38,11 +39,17 @@ export class PerformanceService {
     '6': 'Integrity to Company'
   };
 
-  constructor(private orderService: OrderService) { }
+  constructor(
+    private orderService: OrderService,
+    private authenticationService: AuthenticationService) { }
 
   async getYearsBySid(sid: number) {
     const url = "http://localhost:8080/salesmen/" + sid + "/report";
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      headers: {
+        "Authorization": `Bearer ${this.authenticationService.getCurrentUser().token}`
+      }
+    });
     const reports = await response.json();
 
     const years = [];
@@ -55,7 +62,11 @@ export class PerformanceService {
   async getPerformanceRecordBySidAndYear(sid: number, year: number) {
     // get state and remarks
     const urlReport = "http://localhost:8080/salesmen/" + sid + "/report/" + year;
-    const responseReport = await fetch(urlReport);
+    const responseReport = await fetch(urlReport, {
+      headers: {
+        "Authorization": `Bearer ${this.authenticationService.getCurrentUser().token}`
+      }
+    });
     const reportRecords = await responseReport.json();
     const state = reportRecords.state;
     const remarks = reportRecords.remark;
@@ -65,7 +76,11 @@ export class PerformanceService {
 
     // get social
     const urlSocial = "http://localhost:8080/salesmen/" + sid + "/report/" + year + "/social";
-    const responseSocial = await fetch(urlSocial);
+    const responseSocial = await fetch(urlSocial, {
+      headers: {
+        "Authorization": `Bearer ${this.authenticationService.getCurrentUser().token}`
+      }
+    });
     const socialRecords = await responseSocial.json();
     const criteriaWithDescription = [];
 
@@ -97,7 +112,8 @@ export class PerformanceService {
       method: "PUT",
       mode: "cors",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${this.authenticationService.getCurrentUser().token}`
       },
       body: JSON.stringify(newGoals.map(criteria => {
         return {
@@ -118,7 +134,8 @@ export class PerformanceService {
       method: "PUT",
       mode: "cors",
       headers: {
-        "Content-Type": "application/json"
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${this.authenticationService.getCurrentUser().token}`
       },
       body: JSON.stringify({
         state: newState,
