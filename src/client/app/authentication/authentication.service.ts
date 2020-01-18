@@ -62,4 +62,8 @@ export class AuthenticationService {
       return null;
     }
   }
+
+  isMemberOf(group: string) {
+    return this.currentUser.roles.includes(group.trim());
+  }
 }

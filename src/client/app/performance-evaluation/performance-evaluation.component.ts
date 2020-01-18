@@ -1,6 +1,7 @@
 import { Component, Input, Output } from '@angular/core';
 import { SocialCriterion } from '../performance/performance.service';
 import { EventEmitter } from '@angular/core';
+import { AuthenticationService } from '../authentication/authentication.service';
 
 @Component({
   selector: 'app-performance-evaluation',
@@ -17,6 +18,9 @@ export class PerformanceEvaluationComponent {
   displayedColumns: string[] = ['description', 'targetValue', 'actualValue', 'bonus'];
 
   editMode: boolean = false;
+
+  constructor(
+    private authenticationService: AuthenticationService) { }
 
   updatedSocialEvaluation() {
     this.update.emit();

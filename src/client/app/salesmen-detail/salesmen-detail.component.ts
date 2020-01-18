@@ -5,6 +5,7 @@ import { PerformanceService, PerformanceRecord } from "../performance/performanc
 import { BasicDialogComponent } from "../basic-dialog/basic-dialog.component";
 import { MatDialog } from "@angular/material/dialog";
 import { calculateSocialBonus, calculateSocialTotalBonus } from "../../../server/controller/BonusCalculator"
+import { AuthenticationService } from '../authentication/authentication.service';
 
 @Component({
   selector: 'app-salesmen-detail',
@@ -29,6 +30,7 @@ export class SalesmenDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private salesmenService: SalesmenService,
     private performanceService: PerformanceService,
+    private authenticationService: AuthenticationService,
     public dialog: MatDialog
   ) { }
 

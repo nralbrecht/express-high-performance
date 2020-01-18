@@ -1,4 +1,4 @@
-<div class="spinner-container" *ngIf="isLoadingSalesman;else salesmanContainer">
+<div class="spinner-container" *ngIf="isLoadingSalesman; else salesmanContainer">
   <mat-spinner></mat-spinner>
 </div>
 <ng-template #salesmanContainer>
@@ -14,9 +14,9 @@
           </td>
           <td>
             <ul class="employee-data">
-              <li><b>ID</b> {{ salesman.sid }}</li>
-              <li><b>Name</b> {{ salesman.firstName }} {{ salesman.lastName }}</li>
-              <li><b>Job title</b> {{ salesman.jobTitle }}</li>
+              <li><b>ID:</b> {{ salesman.sid }}</li>
+              <li><b>Name:</b> {{ salesman.firstName }} {{ salesman.lastName }}</li>
+              <li><b>Job title:</b> {{ salesman.jobTitle }}</li>
             </ul>
           </td>
         </tr>
@@ -24,15 +24,15 @@
     </mat-card-content>
   </mat-card>
 
-  <div class="spinner-container" *ngIf="isLoadingYear;else performanceContainer">
+  <div class="spinner-container" *ngIf="isLoadingYear; else performanceContainer">
     <mat-spinner></mat-spinner>
   </div>
   <ng-template #performanceContainer>
     <mat-card class="outer-card">
       <mat-card class="inner-card">
         <mat-card-content>
-          <ul class="record-data">
-            <li>
+          <div class="record-data">
+            <div>
               <b>Year</b>
               <mat-form-field>
                 <mat-select [(ngModel)]="selectedYear" name="year" (selectionChange)="onYearChosen()">
@@ -41,17 +41,17 @@
                   </mat-option>
                 </mat-select>
               </mat-form-field>
-            </li>
-            <li>
+            </div>
+            <div *ngIf="!authenticationService.isMemberOf('sales')">
               <b>Released</b>
               <mat-slide-toggle [(ngModel)]="released" [checked]="released" (change)="toggleReportRelease()"></mat-slide-toggle>
-            </li>
-            <li>
+            </div>
+            <div>
               <button mat-flat-button color="primary" class="highlight">
                 <b>Bonus {{ getTotalBonus() | currency:'EUR' }}</b>
               </button>
-            </li>
-          </ul>
+            </div>
+          </div>
         </mat-card-content>
       </mat-card>
 
@@ -86,15 +86,18 @@
               Remarks
             </mat-panel-title>
           </mat-expansion-panel-header>
-          <mat-form-field floatLabel="never" class="remarks-field">
+          <mat-form-field floatLabel="never" class="remarks-field" *ngIf="authenticationService.isMemberOf('ceo') || authenticationService.isMemberOf('admin'); else isSales">
             <textarea matInput placeholder="Write your remarks here" [(ngModel)]="report.remarks" (blur)="updateReport()"></textarea>
           </mat-form-field>
+          <ng-template #isSales>
+              {{ report.remarks }}
+          </ng-template>
         </mat-expansion-panel>
       </mat-accordion>
     </mat-card>
   </ng-template>
 </ng-template>
 
-<div class="outer-card">
+<div class="outer-card" *ngIf="!authenticationService.isMemberOf('sales')">
   <button mat-flat-button color="accent" [routerLink]="['']">Back</button>
 </div>

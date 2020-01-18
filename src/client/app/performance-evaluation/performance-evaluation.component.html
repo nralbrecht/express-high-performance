@@ -42,7 +42,7 @@
   <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
 </table>
 
-<div class="outer-card">
+<div class="outer-card" *ngIf="authenticationService.isMemberOf('admin') || authenticationService.isMemberOf('hr')">
   <button mat-flat-button color="accent" (click)="enableEditMode()" *ngIf="!editMode; else edit">Edit</button>
   <ng-template #edit>
     <button mat-flat-button color="accent" (click)="saveEdit()">Save</button>

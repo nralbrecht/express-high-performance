@@ -24,14 +24,14 @@ export class AuthGuard implements CanActivate {
       return false;
     }
 
-    const currentUser = this.authenticationService.getCurrentUser();
+    const currentIdCRX = this.authenticationService.getCurrentUser().idCRX;
 
-    if (currentUser.roles.includes("sales") && currentUser.idCRX) {
-      if (route.url.length == 2 && route.url[0].path === "salesman" && route.url[1].path === currentUser.idCRX.toString()) {
+    if (this.authenticationService.isMemberOf("sales") && currentIdCRX) {
+      if (route.url.length == 2 && route.url[0].path === "salesman" && route.url[1].path === currentIdCRX.toString()) {
         return true;
       }
       else {
-        this.router.navigate(['/salesman/' + currentUser.idCRX]);
+        this.router.navigate(['/salesman/' + currentIdCRX]);
         return false;
       }
     }
