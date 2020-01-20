@@ -80,4 +80,5 @@ describe('HR service', function () {
             ]);
         });
     });
+
 });

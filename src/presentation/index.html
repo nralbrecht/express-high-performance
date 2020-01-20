@@ -27,8 +27,8 @@
 			<div class="slides">
 
                 <!-- Titelfolie -->
-				<section data-background="#f1edff">
-                    <h5>Projekt High Performance</h5>
+                <section data-background="#f1edff">
+                     <h5>Projekt High Performance</h5>
                     <h1>VacFormance</h1>
                     <img class="plain" height="300" data-src="https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/pair_programming_njlp.svg" alt="illustration">
                     <p>
@@ -39,18 +39,27 @@
                 <!-- Agenda -->
 				<section data-background="#f1edff">
                     <h2>Agenda</h2>
-                    <ul>
-                        <li>Der Prozess vor VacFormance</li>
-                        <li>Die Integration</li>
-                        <li>Die neue Architektur</li>
-                        <li>Die Demo</li>
-                        <li>Das User Interface</li>
-                        <li>Der Code</li>
-                        <li>Die Tests</li>
-                        <li>Die erreichten Anforderungen</li>
-                        <li>Unsere Lessons Learned</li>
-                        TODO: Swagger
-                    </ul>
+                    <table>
+                        <tr>
+                            <td>
+                                <ul>
+                                    <li>Der Prozess vor VacFormance</li>
+                                    <li>Die Integration</li>
+                                    <li>Die neue Architektur</li>
+                                    <li>Die Demo</li>
+                                    <li>Das User Interface</li>
+                                    <li>Der Code</li>
+                                    <li>Die Tests</li>
+                                    <li>Die Dokumentation</li>
+                                    <li>Die erreichten Anforderungen</li>
+                                    <li>Unsere Lessons Learned</li>
+                                </ul>
+                            </td>
+                            <td id="agenda-pic">
+                                <img class="plain" height="200" data-src="https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/to_do_xvvc.svg" alt="illustration">
+                            </td>
+                        </tr>
+                    </table>
                 </section>
 
                 <!-- Der Prozess vor VacFormance -->
@@ -181,15 +190,47 @@
                 <section>
                     <section data-background="#f1edff">
                         <h2>Das User Interface</h2>
+                        <h5>Mock-Ups im Vergleich</h5>
                         <img class="plain" height="300" data-src="https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/contrast_vb82.svg" alt="illustration">
                     </section>
                     <section>
-                        <h2>Mock-Ups im Vergleich</h2>
-                        TODO: Bilder der Mock-Ups einfügen, ggf. auch Screenshots des echten UIs
+                        <h2>Die Startseite</h2>
+                        <table>
+                            <tr>
+                                <td>
+                                    <img class="plain" width="550" data-src="assets\ui_mockup_startpage.png" alt="ui-image">
+                                </td>
+                                <td>
+                                    <img class="plain" width="550" data-src="assets\ui_startpage.jpg" alt="ui-image">
+                                </td>
+                            </tr>
+                        </table>
                     </section>
                     <section>
-                        <h2>Welche Unterschiede gibt es?</h2>
-                        TODO: Unterschiede zwischen echtem UI & Mock-Ups aufschreiben
+                        <h2>Der Performance Bericht</h2>
+                        <table>
+                            <tr>
+                                <td>
+                                    <img class="plain" width="550" data-src="assets\ui_mockup_performancerecord.png" alt="ui-image">
+                                </td>
+                                <td>
+                                    <img class="plain" width="550" data-src="assets\ui_performancerecord.jpg" alt="ui-image">
+                                </td>
+                            </tr>
+                        </table>
+                    </section>
+                    <section>
+                        <h2>Daten editieren</h2>
+                        <table>
+                            <tr>
+                                <td>
+                                    <img class="plain" width="550" data-src="assets\ui_mockup_performancerecord_edit.png" alt="ui-image">
+                                </td>
+                                <td>
+                                    <img class="plain" width="550" data-src="assets\ui_performancerecord_edit.jpg" alt="ui-image">
+                                </td>
+                            </tr>
+                        </table>
                     </section>
                 </section>
 
@@ -209,6 +250,15 @@
                     </section>
                 </section>
 
+                <!-- Die Dokumentation -->
+                <section>
+                    <section data-background="#f1edff">
+                        <h2>Die Dokumentation</h2>
+                        <h5>mit Swagger UI</h5>
+                        <img class="plain" height="300" data-src="https://42f2671d685f51e10fc6-b9fcecea3e50b3b59bdc28dead054ebc.ssl.cf5.rackcdn.com/illustrations/personal_notebook_sobb.svg" alt="illustration">
+                    </section>
+                </section>
+
                 <!-- Die erreichten Anforderungen  -->
                 <section>
                     <section data-background="#f1edff">
@@ -217,11 +267,38 @@
                     </section>
                     <section>
                         <h2>Erreichte User Stories</h2>
-                        TODO: Erreichte User Stories eintragen
+                        <h5>Must Have</h5>
+                        <p><small>Als <b>CEO</b> möchte ich eine <b>Übersicht über den Angestellten, seine Verkäufe und seine soziale Leistung</b> erhalten, um eine Entscheidungsgrundlage für das jährliche Performance Meeting zu haben.</small></p>
+                        <p><small>Als <b>Mitarbeiter der Personalabteilung</b> möchte ich eine <b>Automatisierung der Bonusberechnung</b>, damit der Prozess effizienter und sicherer abläuft.</small></p>
+                        <p><small>Als <b>Mitarbeiter der Personalabteilung</b> möchte ich die <b>Performancewerte der Mitarbeiter erfassen</b> können, um die erhobenen Werte in die Bonusberechnung einfließen zu lassen.</small></p>
+                        <p><small>Als <b>Mitarbeiter der Personalabteilung</b> möchte ich, dass die freigegebenen <b>Boni automatisiert in OrangeHRM eingetragen</b> werden, damit sie bei der Gehaltsauszahlung berücksichtigt werden kann.</small></p>
+                    </section>
+                    <section>
+                        <h2>Erreichte User Stories</h2>
+                        <h5>Must Have</h5>
+                        <p><small>Als <b>Mitarbeiter der Personalabteilung</b> möchte ich, dass die <b>Bestellungsdaten automatisert aus OpenCRX gezogen</b> werden, damit sie fehlerfrei und auf dem aktuellen Stand im Bericht erscheinen.</small></p>
+                        <p><small>Als <b>IT-Admin</b> möchte ich eine <b>automatisierte Übertragung der Performancewerte</b>, um als Admin nicht in einem Personalmanagementprozess involviert zu sein.</small></p>
+                        <p><small>Als <b>Vertriebsmitarbeiter</b> möchte ich <b>einheitliche Kriterien</b> für die Berechnung der Boni, damit die Boni fair kalkuliert werden.</small></p>
+                        <h5>Should Have</h5>
+                        <p><small>Als <b>CEO</b> möchte ich <b>Kommentare zu Peformancereports</b> abgeben können, um den Mitarbeitern eine individuelle Rückmeldung geben zu können.</small></p>
+                        <p><small>Als <b>CEO</b> möchte ich berechnete Boni vor Festsetzung <b>prüfen und freigeben</b>, um die Kontrolle über ausgezahlte Boni zu behalten.</small></p>
+                    </section>
+                    <section>
+                        <h2>Erreichte User Stories</h2>
+                        <h5>Should Have</h5>
+                        <p><small>Als <b>Vertriebsmitarbeiter</b> möchte ich meinen <b>Bonusbericht einsehen</b> können, um meinen Bonus zu erfahren und mich zu motivieren.</small></p>
+                        <p><small>Als <b>IT-Admin</b> möchte ich eine <b>persistente Speicherung des Bonusberichts</b>, sodass er auch später abgerufen werden kann.</small></p>
+                        <h5>Nice To Have</h5>
+                        <p><small>Als <b>Mitarbeiter</b> möchte ich einen <b>sicheren Login in das Tool</b>, um meinen individuellen Aufgaben nachgehen zu können.</small></p>
                     </section>
                     <section>
                         <h2>Nicht erreichte User Stories</h2>
-                        TODO: Nicht erreichte User Stories eintragen
+                        <h5>Nice To Have</h5>
+                        <p><small>Als <b>CEO</b> möchte ich eine <b>Visualisierung über ein Dashboard</b>, um einen guten Überlick über die Performance-Werte zu erhalten.</small></p>
+                        <h5>Won't Have</h5>
+                        <p><small>Als <b>Vertriebsmitarbeiter</b> möchte ich eine <b>automatisierte Rückmeldung</b> zu meiner individuellen Performance erhalten, um mich zu motivieren und mich zu verbessern. </small></p>
+                        <h5>Deleted</h5>
+                        <p><small>Als <b>CEO</b> möchte ich <b>berechnete Boni vor Festsetzung überarbeiten</b> können, um Boni individuell an zu passen.</small></p>
                     </section>
                 </section>
 
@@ -233,7 +310,10 @@
                     </section>
                     <section>
                         <h2>Unsere Lessons Learned</h2>
-                        TODO: Hier etwas hinschreiben, außerdem auf die Einschränkungen des Prototyps eingehen und mögliche zukünftige Arbeiten vorschlagen
+                        <p>Die Einarbeitung in neue Programmiersprachen und Sprachkonzepte ist anspruchsvoll</p>
+                        <p>Der modulare Aufbau von Software erleichtert die Lösung von komplexen Problemen erheblich</p>
+                        <p>In JavaScript gibt es viele Lösungswege</p>
+                        <p>Die Kommunikation und die Zusammenarbeit in der Gruppe haben aufgrund von hoher Motivation und Spaß sehr gut funktioniert</p>
                     </section>
                 </section>
 
