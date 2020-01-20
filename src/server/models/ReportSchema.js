@@ -31,19 +31,19 @@ async function init() {
         "sid": 90123,
         "year": 2019,
         "state": "open",
-        "remark": "bla bli blub"
+        "remark": "Unfortunately, Mr. Smith was sick for a long period and could not pursue any sales activities."
     }));
     Report.create(new Report({
         "sid": 90123,
         "year": 2018,
         "state": "released",
-        "remark": "bla bli blub"
+        "remark": "Mr. Smith has been very successful and is highly valued by our key customers. Keep it up!"
     }));
     Report.create(new Report({
         "sid": 91337,
         "year": 2019,
         "state": "open",
-        "remark": "bla bli blub"
+        "remark": "Ms. Sallinger was hired this year and has already successfully sold vacuum cleaners to an important customer."
     }));
 }
 
