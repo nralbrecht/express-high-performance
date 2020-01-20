@@ -1596,3 +1596,12 @@ body {
 
 .zoomed .reveal .roll span:after {
   visibility: hidden; }
+
+
+/*********************************************
+ * CUSTOM CSS
+ */
+
+#agenda-pic {
+    vertical-align: middle;
+}

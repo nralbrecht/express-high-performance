@@ -24,6 +24,7 @@ export class SalesmenService {
   }
 
   private async loadSalesmen() {
+    this.salesmen = [];
     const url = "http://localhost:8080/salesmen";
     const response = await fetch(url, {
       headers: {
